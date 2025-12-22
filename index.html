@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Procurithm — Procurement Toolkit</title>
+  <meta name="description" content="Procurithm is a practical procurement toolkit: playbooks, checklists, templates, and a Command Center for faster negotiations and cleaner vendor outcomes." />
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card: rgba(255,255,255,.06);
+      --card2: rgba(255,255,255,.08);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.70);
+      --border: rgba(255,255,255,.14);
+      --accent: #7c3aed;
+      --accent2: #22c55e;
+      --warn: #f59e0b;
+      --danger: #ef4444;
+      --radius: 18px;
+      --shadow: 0 14px 40px rgba(0,0,0,.45);
+      --max: 1100px;
+      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: var(--font);
+      color: var(--text);
+      background:
+        radial-gradient(900px 450px at 15% 10%, rgba(124,58,237,.30), transparent 60%),
+        radial-gradient(900px 450px at 85% 0%, rgba(34,197,94,.22), transparent 60%),
+        radial-gradient(900px 450px at 70% 85%, rgba(245,158,11,.14), transparent 60%),
+        var(--bg);
+      line-height: 1.45;
+    }
+    a { color: inherit; text-decoration: none; }
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 28px 18px 70px; }
+    header {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; padding: 10px 0 18px;
+    }
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .logo {
+      width: 38px; height: 38px; border-radius: 12px;
+      background: linear-gradient(135deg, rgba(124,58,237,.95), rgba(34,197,94,.75));
+      box-shadow: 0 10px 24px rgba(0,0,0,.35);
+      display: grid; place-items: center;
+      border: 1px solid rgba(255,255,255,.18);
+    }
+    .logo span { font-weight: 900; letter-spacing: .4px; }
+    .brand h1 { margin: 0; font-size: 16px; letter-spacing: .25px; }
+    .brand p { margin: 0; font-size: 12px; color: var(--muted); }
+    .nav { display: flex; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
+    .pill {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 12px; border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.05);
+      transition: transform .12s ease, background .12s ease, border-color .12s ease;
+      font-size: 13px; color: var(--muted);
+    }
+    .pill:hover { transform: translateY(-1px); background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.22); color: var(--text); }
+    .hero {
+      margin-top: 14px;
+      display: grid;
+      grid-template-columns: 1.25fr .75fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+    @media (max-width: 920px) { .hero { grid-template-columns: 1fr; } }
+    .card {
+      border: 1px solid var(--border);
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .hero-main { padding: 26px 22px; position: relative; overflow: hidden; }
+    .hero-main:before {
+      content: "";
+      position: absolute; inset: -60px -60px auto auto;
+      width: 220px; height: 220px;
+      background: radial-gradient(circle at 30% 30%, rgba(124,58,237,.55), rgba(124,58,237,0));
+      filter: blur(2px);
+      transform: rotate(15deg);
+      opacity: .9;
+    }
+    .kicker {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 8px 12px; border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.05);
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .kicker b { color: var(--text); }
+    .hero h2 {
+      margin: 14px 0 10px;
+      font-size: 40px;
+      line-height: 1.05;
+      letter-spacing: -.5px;
+    }
+    @media (max-width: 520px) { .hero h2 { font-size: 34px; } }
+    .hero p { margin: 0; color: var(--muted); font-size: 16px; max-width: 66ch; position: relative; }
+    .cta-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; position: relative; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      gap: 10px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      transition: transform .12s ease, background .12s ease, border-color .12s ease, box-shadow .12s ease;
+      user-select: none;
+    }
+    .btn:hover { transform: translateY(-1px); background: rgba(255,255,255,.10); border-color: rgba(255,255,255,.28); }
+    .btn.primary {
+      background: linear-gradient(135deg, rgba(124,58,237,.95), rgba(124,58,237,.65));
+      border-color: rgba(124,58,237,.55);
+      box-shadow: 0 10px 26px rgba(124,58,237,.18);
+    }
+    .btn.good {
+      background: linear-gradient(135deg, rgba(34,197,94,.95), rgba(34,197,94,.60));
+      border-color: rgba(34,197,94,.55);
+      box-shadow: 0 10px 26px rgba(34,197,94,.16);
+    }
+    .hero-side { padding: 18px 18px; display: grid; gap: 12px; background: var(--card2); }
+    .stat {
+      padding: 14px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.05);
+    }
+    .stat h3 { margin: 0 0 6px; font-size: 13px; color: var(--muted); font-weight: 700; }
+    .stat p { margin: 0; font-size: 14px; color: var(--text); }
+    .grid { margin-top: 22px; display: grid; grid-template-columns: repeat(12, 1fr); gap: 14px; }
+    .section-title {
+      grid-column: 1 / -1;
+      margin-top: 10px;
+      display: flex; align-items: baseline; justify-content: space-between; gap: 10px; flex-wrap: wrap;
+    }
+    .section-title h2 { margin: 0; font-size: 20px; letter-spacing: -.2px; }
+    .section-title p { margin: 0; color: var(--muted); font-size: 13px; }
+    .product { grid-column: span 4; padding: 18px 16px; }
+    @media (max-width: 980px) { .product { grid-column: span 6; } }
+    @media (max-width: 640px) { .product { grid-column: span 12; } }
+    .tag {
+      display: inline-flex; align-items: center;
+      padding: 6px 10px; border-radius: 999px;
+      font-size: 12px; color: var(--muted);
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.05);
+      margin-bottom: 10px;
+    }
+    .product h3 { margin: 6px 0 8px; font-size: 16px; }
+    .product ul { margin: 0; padding-left: 18px; color: var(--muted); font-size: 13px; }
+    .product li { margin: 6px 0; }
+    .product .actions { margin-top: 12px; display: flex; gap: 10px; flex-wrap: wrap; }
+    .mini { font-size: 12px; font-weight: 800; padding: 10px 12px; border-radius: 12px; }
+    .mini.primary { background: rgba(124,58,237,.18); border-color: rgba(124,58,237,.35); }
+    .mini.ghost { background: rgba(255,255,255,.05); }
+    .callout {
+      grid-column: 1 / -1;
+      padding: 18px 16px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      align-items: center;
+      background: linear-gradient(135deg, rgba(255,255,255,.07), rgba(255,255,255,.04));
+    }
+    @media (max-width: 720px) { .callout { grid-template-columns: 1fr; } }
+    .callout h3 { margin: 0 0 6px; font-size: 16px; }
+    .callout p { margin: 0; color: var(--muted); font-size: 13px; max-width: 72ch; }
+    footer {
+      margin-top: 26px;
+      color: rgba(255,255,255,.60);
+      font-size: 12px;
+      border-top: 1px solid rgba(255,255,255,.12);
+      padding-top: 16px;
+      display: grid;
+      gap: 8px;
+    }
+    .legal {
+      border: 1px dashed rgba(255,255,255,.18);
+      background: rgba(255,255,255,.04);
+      border-radius: 14px;
+      padding: 12px 12px;
+      color: rgba(255,255,255,.70);
+    }
+    .split { display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; align-items: center; }
+    .muted { color: var(--muted); }
+    .kbd {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12px;
+      padding: 2px 7px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.06);
+      color: rgba(255,255,255,.82);
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="logo" aria-hidden="true"><span>P</span></div>
+        <div>
+          <h1>Procurithm</h1>
+          <p>Procurement toolkit • Playbooks • Templates • Command Center</p>
+        </div>
+      </div>
+      <nav class="nav">
+        <a class="pill" href="#toolkit">Toolkit</a>
+        <a class="pill" href="#how">How it works</a>
+        <a class="pill" href="command-center.html">Command Center</a>
+        <a class="pill" href="#legal">Legal</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="card hero-main">
+        <div class="kicker">New home at <b>procurithm.com</b> • updated 22 Dec 2025</div>
+        <h2>Negotiation leverage, in a box.</h2>
+        <p>
+          Procurithm is a practical procurement toolkit that helps you spot contract traps, control risk,
+          and run cleaner vendor negotiations—fast. Use the playbooks when you need answers, and the
+          Command Center when you need decisions.
+        </p>
+
+        <div class="cta-row">
+          <a class="btn primary" id="cta-buy" href="#" target="_blank" rel="noopener">Get the Toolkit</a>
+          <a class="btn good" href="command-center.html">Open Command Center</a>
+          <a class="btn" id="cta-notion" href="#" target="_blank" rel="noopener">View the Notion Hub</a>
+        </div>
+
+        <p class="muted" style="margin-top:10px;font-size:12px">
+          Tip: Bookmark the Command Center for quick triage. Works offline once downloaded.
+        </p>
+      </div>
+
+      <aside class="card hero-side">
+        <div class="stat">
+          <h3>Use when</h3>
+          <p>Contract review, renewals, SOWs, audits, termination, liability, pricing adjustments.</p>
+        </div>
+        <div class="stat">
+          <h3>Outcomes</h3>
+          <p>Fewer bad renewals • tighter audit language • clear fallback positions • faster approvals.</p>
+        </div>
+        <div class="stat">
+          <h3>What you get</h3>
+          <p>Playbooks + checklists + templates + a decision-oriented Command Center.</p>
+        </div>
+        <div class="stat">
+          <h3>Built for</h3>
+          <p>Procurement pros, vendor managers, finance/ops partners, and founders doing it themselves.</p>
+        </div>
+      </aside>
+    </section>
+
+    <section class="grid" id="toolkit">
+      <div class="section-title">
+        <h2>Included in the toolkit</h2>
+        <p>Start with the Command Center → jump into the right playbook.</p>
+      </div>
+
+      <article class="card product">
+        <div class="tag">Playbook</div>
+        <h3>Renewal Traps &amp; Auto‑Extensions</h3>
+        <ul>
+          <li>Red flags that trigger immediate renegotiation</li>
+          <li>Fallback language for renewal notices &amp; windows</li>
+          <li>Checklist for “silent renewal” prevention</li>
+        </ul>
+        <div class="actions">
+          <a class="btn mini ghost" href="command-center.html#renewals">Use in Command Center</a>
+        </div>
+      </article>
+
+      <article class="card product">
+        <div class="tag">Playbook</div>
+        <h3>Controlling Vendor Audit Rights</h3>
+        <ul>
+          <li>Scope limits (systems, time period, frequency)</li>
+          <li>Notice requirements + confidentiality boundaries</li>
+          <li>Cost allocation and remediation guardrails</li>
+        </ul>
+        <div class="actions">
+          <a class="btn mini ghost" href="command-center.html#audit">Use in Command Center</a>
+        </div>
+      </article>
+
+      <article class="card product">
+        <div class="tag">Command Center</div>
+        <h3>Contract Triage &amp; Risk Signals</h3>
+        <ul>
+          <li>Quick risk scoring (Low / Medium / High)</li>
+          <li>Decision prompts that route you to the right playbook</li>
+          <li>Exportable notes for approvals and follow‑ups</li>
+        </ul>
+        <div class="actions">
+          <a class="btn mini primary" href="command-center.html">Open</a>
+        </div>
+      </article>
+
+      <article class="card callout" id="how">
+        <div>
+          <h3>How it works</h3>
+          <p>
+            1) Start in the Command Center and mark the risk signals. 2) The page suggests the next playbook focus.
+            3) Copy/paste the ready-to-use language into your contract redlines. Save the output for your approvers.
+          </p>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end">
+          <span class="kbd">Cmd/Ctrl</span><span class="muted" style="font-size:12px">+</span><span class="kbd">F</span>
+          <span class="muted" style="font-size:12px">to find clauses fast</span>
+        </div>
+      </article>
+    </section>
+
+    <footer id="legal">
+      <div class="split">
+        <div>© <span id="year"></span> Procurithm. All rights reserved.</div>
+        <div class="muted">Questions? <span class="kbd">support@procurithm.com</span> (replace with your email)</div>
+      </div>
+
+      <div class="legal">
+        <strong>Distribution prohibited.</strong>
+        This toolkit is licensed for the purchaser’s internal business use only. You may not redistribute, resell,
+        sublicense, share publicly, or post any portion (including templates, checklists, and playbooks) on the internet
+        or in shared drives accessible by non-licensed users. No legal advice is provided; use your own counsel for legal review.
+      </div>
+
+      <div class="muted">Last updated: 22 Dec 2025</div>
+    </footer>
+  </div>
+
+  <script>
+    // ======= CONFIG (edit these) =======
+    const LINKS = {
+      buyUrl: "https://YOUR-GUMROAD-LINK-HERE",
+      notionUrl: "https://alabaster-dew-bcb.notion.site/Systematic-Trading-Journal-OS-Execution-Framework-2cd6ab79228b806f8d7cfced5919253a"
+    };
+    // ==================================
+    document.getElementById("year").textContent = new Date().getFullYear();
+    document.getElementById("cta-buy").href = LINKS.buyUrl;
+    document.getElementById("cta-notion").href = LINKS.notionUrl;
+
+    if (LINKS.buyUrl.includes("YOUR-GUMROAD")) {
+      document.getElementById("cta-buy").addEventListener("click", (e) => {
+        e.preventDefault();
+        alert("Set your Gumroad link in the LINKS.buyUrl field inside index.html");
+      });
+    }
+  </script>
+</body>
+</html>
