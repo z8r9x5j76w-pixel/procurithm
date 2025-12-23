@@ -4,38 +4,104 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Procurithm — Command Center</title>
+  <meta name="description" content="Quick contract triage prompts and routing to the right Procurithm playbook." />
   <style>
+    :root { --bg:#0b0f14; --card:#121b26; --text:#e6edf3; --muted:#9aa4af; --border:#233041; --primary:#7c5cff; }
+    * { box-sizing: border-box; }
     body {
       margin: 0;
-      font-family: system-ui, sans-serif;
-      background: #0b0f14;
-      color: #e6edf3;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      text-align: center;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: radial-gradient(900px 500px at 20% 10%, rgba(124,92,255,.15), transparent 60%), linear-gradient(135deg, var(--bg), #0c1420);
+      color: var(--text);
+      line-height: 1.55;
     }
+    a { color: inherit; text-decoration: none; }
+    .wrap { max-width: 900px; margin: 0 auto; padding: 36px 22px 80px; }
+    .top { display:flex; justify-content: space-between; align-items:center; gap: 12px; margin-bottom: 18px; }
+    .btn {
+      display:inline-flex; align-items:center; justify-content:center;
+      padding: 10px 12px; border-radius: 12px;
+      font-weight: 800; font-size: 13px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+    }
+    .btn.primary { background: var(--primary); border-color: rgba(124,92,255,.65); }
+    .btn:hover { filter: brightness(1.06); }
+    .card {
+      background: rgba(18,27,38,.92);
+      border: 1px solid rgba(35,48,65,.9);
+      border-radius: 18px;
+      padding: 22px;
+    }
+    h1 { margin: 0 0 8px; font-size: 26px; letter-spacing: -.2px; }
+    p { margin: 0 0 10px; color: var(--muted); }
+    .grid { display:grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
+    @media (max-width: 860px) { .grid { grid-template-columns: 1fr; } }
     .box {
-      max-width: 520px;
-      padding: 32px;
-      border: 1px solid #222c37;
+      border: 1px solid rgba(255,255,255,.08);
       border-radius: 16px;
-      background: #131a22;
+      padding: 16px;
+      background: rgba(255,255,255,.02);
     }
-    a {
-      color: #7c5cff;
-      text-decoration: none;
-      font-weight: 600;
-    }
+    .box h3 { margin: 0 0 8px; font-size: 15px; }
+    ul { margin: 0; padding-left: 18px; color: var(--muted); }
+    .tiny { font-size: 12px; color: var(--muted); margin-top: 8px; }
+    .link { text-decoration: underline; text-decoration-color: rgba(255,255,255,.15); }
   </style>
 </head>
 <body>
-  <div class="box">
-    <h1>Command Center</h1>
-    <p>This is the decision hub for contract triage and risk assessment.</p>
-    <p>Coming next.</p>
-    <p><a href="index.html">← Back to home</a></p>
+  <div class="wrap">
+    <div class="top">
+      <a class="btn" href="index.html">← Home</a>
+      <a class="btn primary" href="https://pocurithm.gumroad.com/l/hxodp" target="_blank" rel="noopener">Get the Full Suite</a>
+    </div>
+
+    <div class="card">
+      <h1>Command Center</h1>
+      <p>Use this page to triage a contract quickly and decide which playbook to open next.</p>
+
+      <div class="grid">
+        <div class="box">
+          <h3>Quick risk scan</h3>
+          <ul>
+            <li>Auto-renewal / silent extension?</li>
+            <li>Audit rights too broad?</li>
+            <li>Uncapped liability or weak caps?</li>
+            <li>Unfriendly price escalators?</li>
+            <li>Exit terms restrictive?</li>
+          </ul>
+          <div class="tiny">If you answered “yes” to 2+ items, treat as Medium/High risk.</div>
+        </div>
+
+        <div class="box">
+          <h3>Recommended next steps</h3>
+          <ul>
+            <li>Write a one-paragraph risk summary for stakeholders.</li>
+            <li>Define your fallback position before the vendor call.</li>
+            <li>Pick the playbook matching your scenario (renewal / audit / pricing / exit).</li>
+            <li>Prepare a short “ask list” for the negotiation.</li>
+          </ul>
+          <div class="tiny">Coming next: direct links to each playbook inside your download.</div>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="box">
+          <h3>Start small</h3>
+          <p style="margin:0 0 10px;">If you’re just getting going, use the Starter Pack.</p>
+          <a class="btn" href="https://pocurithm.gumroad.com/l/sokuvo" target="_blank" rel="noopener">Starter Pack</a>
+        </div>
+        <div class="box">
+          <h3>SaaS-heavy negotiations</h3>
+          <p style="margin:0 0 10px;">For software/SaaS pricing and exit terms, use the SaaS Toolkit.</p>
+          <a class="btn" href="https://pocurithm.gumroad.com/l/rsbuns" target="_blank" rel="noopener">SaaS Negotiation Toolkit</a>
+        </div>
+      </div>
+
+      <div class="tiny" style="margin-top:16px;">
+        Support: <a class="link" href="mailto:edgemap@proton.me">edgemap@proton.me</a>
+      </div>
+    </div>
   </div>
 </body>
 </html>
