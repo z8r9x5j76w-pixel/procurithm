@@ -1,281 +1,81 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Procurithm — Negotiation leverage, in a box</title>
-  <meta name="description" content="Practical procurement playbooks, templates, and a decision-oriented Command Center for renewals, audits, and vendor negotiations." />
-  <meta name="robots" content="index,follow" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Procurithm — 30-Day SaaS Renewal Price Increase Playbook</title>
+  <meta name="description" content="Vendor raised your SaaS price and renewal is due in ≤30 days? Download a 30–60 minute decision screen: risk, leverage, and next steps." />
   <style>
-    :root {
-      --bg: #0b0f14;
-      --card: #121b26;
-      --text: #e6edf3;
-      --muted: #9aa4af;
-      --border: #233041;
-      --primary: #7c5cff;
-      --green: #2ea043;
-      --shadow: 0 18px 60px rgba(0,0,0,.45);
-    }
-    * { box-sizing: border-box; }
     body {
       margin: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background: radial-gradient(1000px 600px at 30% 20%, rgba(124,92,255,.18), transparent 60%),
-                  radial-gradient(900px 500px at 80% 10%, rgba(46,160,67,.12), transparent 60%),
-                  linear-gradient(135deg, var(--bg), #0c1420);
-      color: var(--text);
-      line-height: 1.55;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      background: #0b1020;
+      color: #f4f6fb;
+      line-height: 1.5;
     }
-    a { color: inherit; text-decoration: none; }
-    .container { max-width: 1100px; margin: 0 auto; padding: 36px 22px 80px; }
-    header { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:36px; }
-    .brand { display:flex; align-items:center; gap:12px; }
-    .dot {
-      width: 34px; height: 34px; border-radius: 10px;
-      background: linear-gradient(135deg, rgba(124,92,255,1), rgba(46,160,67,.8));
-      box-shadow: 0 10px 30px rgba(124,92,255,.25);
-      display:flex; align-items:center; justify-content:center;
-      font-weight: 900; color: #0b0f14;
+    .wrap {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 48px 20px;
     }
-    .brand-title { font-weight: 900; letter-spacing: .2px; }
-    .brand-sub { color: var(--muted); font-size: 13px; }
-    nav { display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end; }
-    nav a {
-      padding: 8px 12px; border: 1px solid transparent; border-radius: 999px;
-      color: var(--muted); font-size: 13px;
-      background: rgba(255,255,255,.02);
+    h1 {
+      font-size: 40px;
+      line-height: 1.1;
+      margin-bottom: 16px;
     }
-    nav a:hover { border-color: rgba(255,255,255,.08); color: var(--text); }
-
-    .hero { display:grid; grid-template-columns: 1.25fr .75fr; gap: 18px; margin-bottom: 22px; }
-    .card {
-      background: linear-gradient(180deg, rgba(18,27,38,.92), rgba(12,18,26,.92));
-      border: 1px solid rgba(35,48,65,.9);
-      border-radius: 18px;
-      padding: 26px;
-      box-shadow: var(--shadow);
+    p {
+      max-width: 720px;
+      color: #cfd5ff;
     }
-    .kicker {
-      display:inline-flex; align-items:center; gap:10px;
-      padding: 6px 10px; border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.08);
-      color: var(--muted); font-size: 12px;
-      background: rgba(255,255,255,.03);
-      margin-bottom: 14px;
+    .cta {
+      margin-top: 24px;
     }
-    h1 { margin: 0 0 10px; font-size: 36px; letter-spacing: -.4px; }
-    .lead { margin: 0 0 18px; color: var(--muted); font-size: 16.5px; }
-    .btns { display:flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
-    .btn {
-      display:inline-flex; align-items:center; justify-content:center;
-      padding: 12px 14px; border-radius: 12px;
-      font-weight: 800; font-size: 14px;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.03);
+    a.button {
+      display: inline-block;
+      padding: 14px 18px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #7c5cff, #24d18f);
+      color: #081018;
+      text-decoration: none;
+      font-weight: 600;
     }
-    .btn.primary { background: var(--primary); border-color: rgba(124,92,255,.65); }
-    .btn.green { background: rgba(46,160,67,.15); border-color: rgba(46,160,67,.35); }
-    .btn:hover { filter: brightness(1.06); }
-    .note { margin-top: 10px; color: var(--muted); font-size: 12.5px; }
-
-    .side h3 { margin: 0 0 12px; font-size: 16px; }
-    .pill {
-      padding: 12px 12px; border-radius: 14px;
-      border: 1px solid rgba(255,255,255,.08);
-      background: rgba(255,255,255,.02);
+    ul {
+      margin-top: 28px;
+      padding-left: 18px;
+    }
+    li {
       margin-bottom: 10px;
     }
-    .pill .t { color: var(--muted); font-size: 12px; margin-bottom: 6px; }
-    .pill .v { font-size: 13.5px; }
-
-    .bullets { display:grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
-    .bullets ul { margin: 0; padding-left: 18px; color: var(--muted); }
-    @media (max-width: 920px) {
-      .hero { grid-template-columns: 1fr; }
-      .bullets { grid-template-columns: 1fr; }
-    }
-
-    .section-title { margin: 34px 0 10px; font-size: 20px; }
-    .section-sub { margin: 0 0 10px; color: var(--muted); }
-
-    .grid { display:grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 14px; }
-    @media (max-width: 920px) { .grid { grid-template-columns: 1fr; } }
-
-    .product {
-      position: relative;
-      padding: 18px;
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,.08);
-      background: rgba(255,255,255,.02);
-      overflow: hidden;
-      min-height: 160px;
-    }
-    .product.featured {
-      border-color: rgba(124,92,255,.45);
-      background: radial-gradient(650px 250px at 0% 0%, rgba(124,92,255,.15), transparent 55%), rgba(255,255,255,.02);
-    }
-    .badge {
-      position:absolute; top: 14px; right: 14px;
-      font-size: 11px; font-weight: 900; letter-spacing: .2px;
-      padding: 6px 10px; border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.03);
-      color: var(--muted);
-    }
-    .product h4 { margin: 0 0 6px; font-size: 16px; }
-    .product p { margin: 0 0 14px; color: var(--muted); font-size: 13.5px; }
-    .price { color: var(--text); font-weight: 900; font-size: 18px; }
-    .actions { display:flex; gap: 10px; align-items:center; flex-wrap: wrap; }
-    .tiny { color: var(--muted); font-size: 12px; }
-
     footer {
-      margin-top: 40px;
-      padding-top: 18px;
-      border-top: 1px solid rgba(255,255,255,.08);
-      color: var(--muted);
+      margin-top: 60px;
       font-size: 13px;
-      display:flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
+      color: #9aa1d6;
     }
-    footer a { text-decoration: underline; text-decoration-color: rgba(255,255,255,.15); }
   </style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <div class="brand">
-        <div class="dot">P</div>
-        <div>
-          <div class="brand-title">Procurithm</div>
-          <div class="brand-sub">Procurement toolkit • Playbooks • Templates • Command Center</div>
-        </div>
-      </div>
-      <nav>
-        <a href="#toolkit">Toolkit</a>
-        <a href="#how">How it works</a>
-        <a href="command-center.html">Command Center</a>
-        <a href="#support">Support</a>
-      </nav>
-    </header>
+  <div class="wrap">
+    <h1>SaaS vendor raised prices and renewal is due in ≤30 days?</h1>
+    <p>
+      This page gives you a fast, decision‑first way to assess renewal risk, pricing leverage,
+      and next steps before you reply to the vendor.
+      It is designed for renewal pressure — not theory.
+    </p>
 
-    <section class="hero">
-      <div class="card">
-        <div class="kicker">New home at <strong>procurithm.com</strong> • offline-first • buyer-side</div>
-        <h1>Negotiation leverage, in a box.</h1>
-        <p class="lead">
-          Practical procurement playbooks and a decision-oriented Command Center for renewals, audits,
-          and vendor negotiations—built to help you move faster and avoid expensive contract traps.
-        </p>
+    <div class="cta">
+      <a class="button" href="procurithm-saas-renewal-risk-check-lite.pdf" target="_blank">
+        Download the 30‑Day SaaS Renewal Risk Check (PDF)
+      </a>
+    </div>
 
-        <div class="btns">
-          <a class="btn primary" href="https://pocurithm.gumroad.com/l/hxodp" target="_blank" rel="noopener">Get the Full Suite</a>
-          <a class="btn green" href="command-center.html">Open Command Center</a>
-          <a class="btn" href="https://pocurithm.gumroad.com/l/sokuvo" target="_blank" rel="noopener">Starter Pack</a>
-          <a class="btn" href="https://pocurithm.gumroad.com/l/rsbuns" target="_blank" rel="noopener">SaaS Negotiation</a>
-        </div>
-        <div class="note">Tip: Start with the Command Center → jump to the right playbook. Works offline once downloaded.</div>
+    <ul>
+      <li>30–60 minute workflow to a Safe / Caution / Risk signal</li>
+      <li>Focus on renewal traps: auto‑renewal, uplifts, exit, liability, data</li>
+      <li>Turns risk into a concrete negotiation agenda</li>
+    </ul>
 
-        <div class="bullets" id="how">
-          <div>
-            <div class="tiny" style="margin-bottom:6px;">Use when</div>
-            <ul>
-              <li>Renewals and auto-extensions</li>
-              <li>Audit rights and scope limits</li>
-              <li>Pricing resets, exit terms, change control</li>
-            </ul>
-          </div>
-          <div>
-            <div class="tiny" style="margin-bottom:6px;">Outcomes</div>
-            <ul>
-              <li>Fewer bad renewals and faster approvals</li>
-              <li>Clear fallback positions before calls</li>
-              <li>Cleaner risk notes for stakeholders</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <div class="card side">
-        <h3>What you get</h3>
-        <div class="pill">
-          <div class="t">Playbooks</div>
-          <div class="v">Renewals, audits, pricing resets, commercial risk — buyer-side and practical.</div>
-        </div>
-        <div class="pill">
-          <div class="t">Templates & checklists</div>
-          <div class="v">Copy-ready review lists and language you can apply to real contracts.</div>
-        </div>
-        <div class="pill">
-          <div class="t">Command Center</div>
-          <div class="v">Quick triage → risk signals → route to the right playbook → export notes.</div>
-        </div>
-        <div class="pill">
-          <div class="t">Privacy</div>
-          <div class="v">Offline-first. No tracking. No data upload.</div>
-        </div>
-      </div>
-    </section>
-
-    <section class="card" id="toolkit">
-      <div class="section-title">Choose your toolkit</div>
-      <p class="section-sub">Pick the suite if you manage multiple vendors and renewals. Otherwise start small and upgrade later.</p>
-
-      <div class="grid">
-        <div class="product featured">
-          <div class="badge">Most complete</div>
-          <h4>Full Procurement Suite</h4>
-          <p>Renewal & Vendor Portfolio Control. Portfolio-level dashboards plus everything in the smaller packs.</p>
-          <div class="actions">
-            <div class="price">$249</div>
-            <a class="btn primary" href="https://pocurithm.gumroad.com/l/hxodp" target="_blank" rel="noopener">Buy on Gumroad</a>
-          </div>
-          <div class="tiny" style="margin-top:10px;">Best for: renewals across vendors • governance • commercial risk heatmaps</div>
-        </div>
-
-        <div class="product">
-          <h4>SaaS Negotiation Toolkit</h4>
-          <p>Pricing, Exit & Commercial Risk. Focused playbooks and templates for SaaS and software contracts.</p>
-          <div class="actions">
-            <div class="price">$89</div>
-            <a class="btn" href="https://pocurithm.gumroad.com/l/rsbuns" target="_blank" rel="noopener">Buy on Gumroad</a>
-          </div>
-          <div class="tiny" style="margin-top:10px;">Best for: pricing pressure • exit/renewal clauses • commercial terms</div>
-        </div>
-
-        <div class="product">
-          <h4>Procurement Starter Pack</h4>
-          <p>Buyer‑Side Playbooks. A lightweight starting point for buyer-side renewals and negotiations.</p>
-          <div class="actions">
-            <div class="price">$39</div>
-            <a class="btn" href="https://pocurithm.gumroad.com/l/sokuvo" target="_blank" rel="noopener">Buy on Gumroad</a>
-          </div>
-          <div class="tiny" style="margin-top:10px;">Best for: getting started • quick checklists • baseline playbooks</div>
-        </div>
-      </div>
-
-      <div class="grid" style="margin-top:14px;">
-        <div class="product" style="grid-column: 1 / -1;">
-          <div class="actions" style="justify-content: space-between;">
-            <div>
-              <h4 style="margin-bottom:4px;">Negotiation Guide (PDF)</h4>
-              <div class="tiny">Procurement & Software Negotiation Guide</div>
-            </div>
-            <div class="actions">
-              <div class="price">$29</div>
-              <a class="btn" href="https://pocurithm.gumroad.com/l/rhgknt" target="_blank" rel="noopener">Get the PDF</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <footer id="support">
-      <div>Questions or support: <a href="mailto:edgemap@proton.me">edgemap@proton.me</a></div>
-      <div class="tiny">© Procurithm. Offline-first. Buyer-side. No tracking.</div>
+    <footer>
+      © 2026 Procurithm · Practical decision aid · Not legal advice
     </footer>
   </div>
 </body>
