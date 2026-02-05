@@ -2,604 +2,196 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Procurithm — Software Procurement Starter Pack & Negotiation OS</title>
-  <meta name="description" content="Procurithm is an offline, self-contained toolkit for software procurement: renewals, negotiation, risk & compliance, SLAs, and invoice auditing." />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Procurithm — Offline Procurement Toolkit</title>
+  <meta name="description" content="Procurithm: offline-first procurement & SaaS negotiation toolkit. Renewal risk checks, negotiation playbooks, and vendor portfolio control." />
+
   <style>
     :root{
-      --bg0:#050914;
-      --bg1:#081228;
-      --card: rgba(255,255,255,.06);
-      --stroke: rgba(255,255,255,.12);
-      --txt:#EAF0FF;
-      --muted: rgba(234,240,255,.72);
-      --muted2: rgba(234,240,255,.55);
-      --accent:#4DA3FF;
-      --accent2:#7B5CFF;
-      --good:#3CE6A8;
-      --shadow: 0 18px 60px rgba(0,0,0,.55);
-      --radius: 22px;
-      --radius2: 16px;
-      --max: 1120px;
-      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      --bg:#0b0f1a; --card:#111a2e; --card2:#0f1628; --text:#e9eefc; --muted:#a9b6d8;
+      --line:rgba(255,255,255,.10); --accent:#4da3ff; --accent2:#5cffb3;
     }
     *{box-sizing:border-box}
-    html,body{height:100%}
     body{
       margin:0;
-      font-family: var(--sans);
-      color: var(--txt);
-      background:
-        radial-gradient(1200px 700px at 20% 10%, rgba(77,163,255,.22), transparent 55%),
-        radial-gradient(1000px 600px at 80% 15%, rgba(123,92,255,.20), transparent 55%),
-        radial-gradient(900px 600px at 50% 95%, rgba(60,230,168,.10), transparent 55%),
-        linear-gradient(180deg, var(--bg0), var(--bg1) 60%, #050816 100%);
-      overflow-x:hidden;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background: radial-gradient(1200px 600px at 20% -10%, rgba(77,163,255,.22), transparent 60%),
+                  radial-gradient(900px 500px at 90% 10%, rgba(92,255,179,.12), transparent 60%),
+                  var(--bg);
+      color:var(--text);
+      line-height:1.5;
     }
-    a{color:inherit; text-decoration:none}
-    .wrap{max-width: var(--max); margin: 0 auto; padding: 28px 18px 80px}
-    .topbar{
-      position: sticky; top:0; z-index:10;
+    a{color:inherit}
+    .wrap{max-width:1040px; margin:0 auto; padding:28px 18px 70px}
+    .top{
+      display:flex; align-items:center; justify-content:space-between; gap:14px;
+      padding:14px 16px; border:1px solid var(--line); border-radius:16px;
+      background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
       backdrop-filter: blur(10px);
-      background: linear-gradient(180deg, rgba(5,9,20,.78), rgba(5,9,20,.35));
-      border-bottom: 1px solid rgba(255,255,255,.08);
-    }
-    .topbar .inner{
-      max-width: var(--max); margin: 0 auto;
-      display:flex; align-items:center; justify-content:space-between;
-      padding: 14px 18px;
     }
     .brand{display:flex; align-items:center; gap:12px}
-    .mark{
-      width:36px; height:36px; border-radius: 12px;
-      background:
-        radial-gradient(12px 12px at 28% 32%, rgba(255,255,255,.75), transparent 60%),
-        radial-gradient(14px 14px at 70% 70%, rgba(255,255,255,.35), transparent 65%),
-        linear-gradient(135deg, rgba(77,163,255,1), rgba(123,92,255,1));
-      box-shadow: 0 10px 30px rgba(77,163,255,.18);
-      border: 1px solid rgba(255,255,255,.25);
-    }
-    .brand h1{font-size: 16px; margin:0; letter-spacing:.2px}
-    .brand .sub{font-size: 12px; color: var(--muted2); margin-top:2px}
-    .nav{display:flex; gap: 10px; align-items:center; flex-wrap:wrap; justify-content:flex-end}
-    .pill{
-      font-size: 12px; color: var(--muted);
-      padding: 9px 12px; border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.04);
-    }
-    .pill strong{color: var(--txt); font-weight:600}
-    .btn{
-      display:inline-flex; align-items:center; gap:10px;
-      padding: 10px 14px; border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.16);
-      background: linear-gradient(135deg, rgba(77,163,255,.95), rgba(123,92,255,.85));
+    .logo{
+      width:38px; height:38px; border-radius:12px;
+      background: linear-gradient(135deg, rgba(77,163,255,.95), rgba(92,255,179,.85));
       box-shadow: 0 14px 45px rgba(77,163,255,.18);
-      font-weight: 650;
-      font-size: 13px;
-      cursor:pointer;
-      user-select:none;
     }
-    .btn.ghost{
-      background: rgba(255,255,255,.04);
-      box-shadow:none;
-      font-weight:600;
-    }
-    .hero{
-      margin-top: 26px;
-      display:grid;
-      grid-template-columns: 1.15fr .85fr;
-      gap: 18px;
-      align-items: stretch;
-    }
-    @media (max-width: 980px){ .hero{grid-template-columns: 1fr;} }
-    .card{
-      background: var(--card);
-      border: 1px solid var(--stroke);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-    }
-    .heroLeft{padding: 28px}
-    .kicker{
-      display:inline-flex; gap:10px; align-items:center;
-      font-size: 12px; color: var(--muted);
-      border:1px solid rgba(255,255,255,.14);
-      padding: 7px 10px; border-radius: 999px;
-      background: rgba(255,255,255,.04);
-    }
-    .dot{width:8px;height:8px;border-radius:99px;background: var(--good); box-shadow: 0 0 0 4px rgba(60,230,168,.12);}
-    h2{
-      margin: 14px 0 10px;
-      font-size: 44px;
-      line-height: 1.06;
-      letter-spacing: -0.6px;
-    }
-    @media (max-width: 520px){ h2{font-size: 36px} }
-    .lead{
-      color: var(--muted);
-      font-size: 15px;
-      line-height: 1.55;
-      margin: 0 0 18px;
-      max-width: 70ch;
-    }
-    .ctaRow{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
-    .hint{font-size: 12px; color: var(--muted2); margin-top: 10px}
-    .chips{display:flex; gap:10px; flex-wrap:wrap; margin-top: 18px}
-    .chip{
-      font-size: 12px; color: var(--muted);
-      padding: 8px 10px; border-radius: 999px;
-      background: rgba(255,255,255,.04);
-      border: 1px solid rgba(255,255,255,.12);
-    }
-    .heroRight{padding: 18px}
-    .mini{
-      padding: 16px;
-      border-radius: var(--radius2);
-      background: rgba(255,255,255,.04);
-      border: 1px solid rgba(255,255,255,.12);
-      margin-bottom: 12px;
-    }
-    .mini h3{margin:0 0 6px; font-size: 13px; letter-spacing:.25px}
-    .mini p{margin:0; color: var(--muted); font-size: 12.5px; line-height:1.5}
-    .metricRow{display:grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 10px}
-    @media (max-width: 520px){ .metricRow{grid-template-columns: 1fr} }
-    .metric{
-      border-radius: 16px;
-      background: rgba(0,0,0,.18);
-      border: 1px solid rgba(255,255,255,.10);
-      padding: 12px;
-    }
-    .metric .k{font-size: 11px; color: var(--muted2)}
-    .metric .v{font-size: 18px; margin-top: 4px; font-weight: 750}
-    .metric .s{font-size: 11px; color: var(--muted); margin-top: 2px}
-    .section{margin-top: 20px; padding: 0 0 10px}
-    .sectionTitle{
-      display:flex; align-items:baseline; justify-content:space-between; gap: 12px;
-      margin: 26px 0 10px;
-    }
-    .sectionTitle h3{margin:0; font-size: 16px; letter-spacing:.2px}
-    .sectionTitle span{color: var(--muted2); font-size: 12px}
-    .grid{
-      display:grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 14px;
-    }
-    .col4{grid-column: span 4}
-    .col6{grid-column: span 6}
-    .col12{grid-column: span 12}
-    @media (max-width: 980px){ .col4,.col6{grid-column: span 12} }
-    .tile{
-      padding: 18px;
-      border-radius: var(--radius);
+    .brand h1{font-size:16px; margin:0}
+    .brand .sub{font-size:12px; color:var(--muted)}
+    .btns{display:flex; gap:10px; flex-wrap:wrap}
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:10px 12px; border-radius:12px; border:1px solid var(--line);
+      text-decoration:none; font-weight:650; font-size:13px;
       background: rgba(255,255,255,.05);
-      border: 1px solid rgba(255,255,255,.12);
-      height: 100%;
     }
-    .tile h4{margin:0 0 8px; font-size: 14px}
-    .tile p{margin:0; color: var(--muted); font-size: 12.75px; line-height:1.55}
-    .bul{margin: 12px 0 0; padding:0 0 0 16px; color: var(--muted); font-size: 12.5px; line-height:1.55}
-    .bul li{margin: 6px 0}
-    .tagRow{display:flex; gap:8px; flex-wrap:wrap; margin-top: 12px}
-    .tag{
-      font-size: 11px; color: var(--muted);
-      border: 1px solid rgba(255,255,255,.14);
-      padding: 5px 8px; border-radius: 999px;
-      background: rgba(0,0,0,.18);
+    .btn.primary{
+      border-color: rgba(77,163,255,.35);
+      background: linear-gradient(180deg, rgba(77,163,255,.22), rgba(77,163,255,.10));
     }
-    .pricing{
-      padding: 18px;
-      border-radius: var(--radius);
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.04));
-      border: 1px solid rgba(255,255,255,.12);
+    .btn.ghost{background:transparent}
+    .hero{margin:26px 4px 6px}
+    .hero h2{font-size:34px; line-height:1.15; margin:0 0 10px}
+    .hero p{max-width:840px; margin:0; color:var(--muted); font-size:15px}
+    .chips{display:flex; flex-wrap:wrap; gap:8px; margin-top:14px}
+    .chip{
+      font-size:12px; color:#d8e3ff; padding:6px 10px; border-radius:999px;
+      border:1px solid var(--line); background: rgba(255,255,255,.04);
     }
-    .priceTop{display:flex; align-items:flex-start; justify-content:space-between; gap:10px}
-    .priceTop h4{margin:0; font-size: 14px}
-    .price{
-      font-size: 28px; font-weight: 850;
-      letter-spacing: -0.4px;
+    .grid{display:grid; gap:14px; margin-top:18px}
+    @media(min-width:860px){ .grid{grid-template-columns: repeat(12, 1fr);} }
+    .card{
+      border:1px solid var(--line); border-radius:18px;
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      padding:16px 16px 14px;
     }
-    .price small{font-size: 12px; color: var(--muted); font-weight:600}
-    .accentLine{
-      height: 2px; width: 100%;
-      background: linear-gradient(90deg, rgba(77,163,255,1), rgba(123,92,255,1));
-      border-radius: 999px;
-      margin: 12px 0 10px;
-      opacity: .85;
+    .col4{grid-column: span 12}
+    .col6{grid-column: span 12}
+    .col12{grid-column: span 12}
+    @media(min-width:860px){
+      .col4{grid-column: span 4}
+      .col6{grid-column: span 6}
+      .col12{grid-column: span 12}
     }
-    .compare{
-      width:100%;
-      border-collapse: collapse;
-      overflow:hidden;
-      border-radius: var(--radius);
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.04);
+    h3{margin:0 0 10px; font-size:16px}
+    h4{margin:0 0 8px; font-size:14px}
+    p{margin:0 0 10px}
+    ul{margin:0; padding-left:18px}
+    li{margin:6px 0; color:var(--muted)}
+    .muted{color:var(--muted)}
+    .sectionTitle{display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-top:26px}
+    .sectionTitle span{color:var(--muted); font-size:12px}
+    .links ul{list-style:none; padding:0; margin:0}
+    .links li{margin:10px 0; color:var(--text)}
+    .links a{
+      text-decoration: underline;
+      text-underline-offset: 3px;
     }
-    .compare th,.compare td{
-      padding: 12px 12px;
-      border-bottom: 1px solid rgba(255,255,255,.08);
-      font-size: 12.5px;
-      text-align:left;
-      vertical-align: top;
-    }
-    .compare th{color: var(--muted); font-weight:650}
-    .ok{color: rgba(60,230,168,.95); font-weight:800}
-    .muted{color: var(--muted)}
-    .fine{color: var(--muted2); font-size: 12px}
     .foot{
-      margin-top: 26px;
-      padding-top: 18px;
-      border-top: 1px solid rgba(255,255,255,.10);
-      color: var(--muted2);
-      font-size: 12px;
-      display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;
+      margin-top:28px; padding-top:18px; border-top:1px solid var(--line);
+      display:flex; flex-wrap:wrap; gap:10px; justify-content:space-between;
+      color:var(--muted); font-size:12px;
     }
-    .kbd{
-      font-family: var(--mono);
-      font-size: 11px;
-      padding: 2px 8px;
-      border-radius: 8px;
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(0,0,0,.18);
-      color: rgba(234,240,255,.82);
+    .rights{
+      position:fixed; left:0; right:0; bottom:0;
+      background: rgba(0,0,0,.55);
+      border-top:1px solid rgba(255,255,255,.10);
+      color: rgba(255,255,255,.78);
+      font-size:12px;
+      padding:10px 14px;
+      backdrop-filter: blur(8px);
     }
-  
-/* === Procurithm QA layout guard (non-content) === */
-*,
-*::before,
-*::after { box-sizing: border-box; }
-
-:root { --maxw: 1240px; }
-
-.wrap { max-width: var(--maxw) !important; margin-left:auto !important; margin-right:auto !important; }
-
-header { display:flex !important; align-items:flex-start !important; justify-content:space-between !important; gap:12px !important; flex-wrap:wrap !important; }
-.brand { display:flex; align-items:center; gap:10px; padding-top:2px; }
-.brand img { height:22px; width:auto; display:block; filter: drop-shadow(0 6px 22px rgba(0,0,0,.35)); opacity:.95; }
-
-.top-actions { display:flex !important; gap:10px !important; flex-wrap:wrap !important; justify-content:flex-end !important; }
-
-.grid, .kpis, .cards, .card-grid, .section-grid, .layout, .cols, .columns {
-  display:grid !important;
-  gap:14px !important;
-  align-items:stretch !important;
-  grid-auto-rows: minmax(0, auto) !important;
-}
-
-.card, .panel, .box, .tile, .section, .widget, .block, .balloon {
-  position: relative !important;
-  height: auto !important;
-  min-height: unset !important;
-  overflow: hidden !important;
-}
-
-pre, code, textarea {
-  max-width: 100% !important;
-}
-
-pre { white-space: pre-wrap !important; overflow:auto !important; }
-textarea { resize: vertical !important; }
-
-.footer {
-  margin-top: 18px;
-  padding: 14px 0 26px 0;
-  border-top: 1px solid rgba(255,255,255,.10);
-  color: rgba(255,255,255,.60);
-  font-size: 12px;
-  line-height: 1.4;
-}
-.footer .muted { color: rgba(255,255,255,.48); }
-@media print {
-  header .top-actions, header .brand { display:none !important; }
-  .footer { color: #444 !important; border-top: 1px solid #ddd !important; }
-}
-
-
-/* === Procurithm layout hotfix (non-content) === */
-:root { --pillFont: 0.85rem; --pillPadV: 8px; --pillPadH: 12px; }
-
-.pill, .badge, .tag {
-  font-size: var(--pillFont) !important;
-  padding: var(--pillPadV) var(--pillPadH) !important;
-  line-height: 1.15 !important;
-  max-width: 100%;
-  white-space: normal;
-}
-
-.card, .panel, .box {
-  min-height: unset !important;
-}
-
-.card ul, .panel ul, .box ul { margin-top: 10px !important; }
-.card li, .panel li, .box li { margin: 8px 0 !important; line-height: 1.35 !important; }
-
-.small, .muted, .subtle { opacity: 1 !important; } /* avoid invisible text on some screens */
-.small { color: var(--muted) !important; }
-
-@media (max-width: 980px){
-  .grid, .two, .cols, .layout { grid-template-columns: 1fr !important; }
-}
-
-.procurithm-footerbar{
-  margin-top: 22px;
-  padding: 14px 18px;
-  border-radius: 16px;
-  border: 1px solid rgba(255,255,255,.10);
-  background: rgba(0,0,0,.22);
-  color: rgba(255,255,255,.72);
-  font-size: 12px;
-  line-height: 1.35;
-}
-@media print{
-  .procurithm-footerbar{ border: 1px solid #bbb; background: #fff; color: #333; }
-}
-
-
-/* Procurithm legal footer */
-.procurithm-legal-footer{
-  margin-top: 18px;
-  padding: 10px 12px;
-  border: 1px solid rgba(255,255,255,0.10);
-  border-radius: 14px;
-  background: rgba(0,0,0,0.18);
-  color: rgba(255,255,255,0.72);
-  font-size: 12px;
-  line-height: 1.35;
-  text-align: center;
-}
-@media print{
-  .procurithm-legal-footer{ break-inside: avoid; }
-}
-
-/* Procurithm rights notice (always visible) */
-body{ padding-bottom: 56px; }
-.rights-banner{
-  position: fixed;
-  left: 16px;
-  right: 16px;
-  bottom: 12px;
-  z-index: 9999;
-  display: flex;
-  justify-content: center;
-  pointer-events: none;
-}
-.rights-banner .rights-inner{
-  pointer-events: auto;
-  font-size: 12px;
-  letter-spacing: 0.2px;
-  color: rgba(255,255,255,0.78);
-  background: rgba(0,0,0,0.35);
-  border: 1px solid rgba(255,255,255,0.14);
-  border-radius: 999px;
-  padding: 10px 14px;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  box-shadow: 0 10px 24px rgba(0,0,0,0.25);
-}
-@media print{
-  body{ padding-bottom: 0 !important; }
-  .rights-banner{ position: static; margin-top: 14px; }
-  .rights-banner .rights-inner{ background: transparent; color: #111; border: none; box-shadow: none; }
-}
-</style>
+    .rights .inner{max-width:1040px; margin:0 auto}
+  </style>
 </head>
+
 <body>
-  <div class="topbar">
-    <div class="inner">
+  <div class="wrap">
+    <header class="top">
       <div class="brand">
-        <div class="mark" aria-hidden="true"></div>
+        <div class="logo" aria-hidden="true"></div>
         <div>
           <h1>Procurithm</h1>
-          <div class="sub">Offline procurement OS for software renewals, negotiation & risk</div>
+          <div class="sub">Offline-first procurement & SaaS negotiation toolkit</div>
         </div>
       </div>
-      <div class="nav">
-        <a class="btn ghost" href="alerts.html">Alerts</a>
-        <div class="pill"><strong>Self‑contained</strong> • runs locally</div>
-        <div class="pill"><strong>No vendor data</strong> leaves your device</div>
-        <a class="btn ghost" href="#pricing">View bundles</a>
-        <a class="btn" href="mailto:edgemap@proton.me?subject=Procurithm%20support">Support: edgemap@proton.me</a>
-      </div>
-    </div>
-  </div>
+      <nav class="btns">
+        <a class="btn primary" href="mailto:edgemap@proton.me?subject=Procurithm%20demo%20request">Email for demo</a>
+        <a class="btn ghost" href="#products">View products</a>
+      </nav>
+    </header>
 
-  <div class="wrap">
     <section class="hero">
-      <div class="card heroLeft">
-        <div class="kicker"><span class="dot"></span> Procurement, risk & negotiation — standardized in minutes</div>
-        <h2>Turn renewals, uplifts, and contract risk into repeatable logic.</h2>
-        <p class="lead">
-          Procurithm is a practical software procurement toolkit: pricing uplift defense, vendor renewal planning,
-          SLA/service credit review, governance redlines, compliance trade‑offs, invoice anomaly checks — plus an
-          integrated “Command Center” view. Everything is offline, portable, and client‑ready.
-        </p>
-        <div class="ctaRow">
-          <a class="btn" href="#contact">Get Procurithm (Complete bundle)</a>
-          <a class="btn ghost" href="#suite">See what’s inside</a>
-        </div>
-        <div class="chips">
-          <span class="chip">✅ Works for SMB / Mid / Enterprise</span>
-          <span class="chip">✅ No accounts, servers, or install</span>
-          <span class="chip">✅ Export JSON/CSV + print to PDF</span>
-          <span class="chip">✅ Negotiation playbooks + templates</span>
-        </div>
-        <div class="hint">
-          Typical use: open the HTML file → paste vendor text/prices → generate options, redlines, and counter‑emails.
-        </div>
-      </div>
-
-      <aside class="card heroRight">
-        <div class="mini">
-          <h3>What you get</h3>
-          <p>A suite of offline HTML tools + starter pack content you can use immediately with vendors, finance, IT, security, and legal.</p>
-          <div class="metricRow">
-            <div class="metric"><div class="k">Format</div><div class="v">HTML</div><div class="s">portable & exportable</div></div>
-            <div class="metric"><div class="k">Security</div><div class="v">Offline</div><div class="s">no upload required</div></div>
-            <div class="metric"><div class="k">Best for</div><div class="v">Renewals</div><div class="s">uplift, risk, SLA</div></div>
-          </div>
-        </div>
-
-        <div class="mini">
-          <h3>Why it converts internally</h3>
-          <p>Procurement becomes a shared language: consistent inputs → consistent outputs → faster approvals.</p>
-          <ul class="bul">
-            <li>Align Finance + IT + Security with structured decision artifacts.</li>
-            <li>Reduce “hand‑wavy” negotiation by anchoring to CPI caps, metrics freeze, and MESO options.</li>
-            <li>Surface governance gaps early (audit, data residency, termination, SLA exclusions).</li>
-          </ul>
-        </div>
-
-        <div class="mini">
-          <h3>Delivery</h3>
-          <p>Zip package + quickstart. Optional: customization for your approval workflow, naming conventions, and templates.</p>
-          <div class="tagRow">
-            <span class="tag">Single‑org license</span>
-            <span class="tag">Non‑transferable</span>
-            <span class="tag">No redistribution</span>
-          </div>
-        </div>
-      </aside>
-    </section>
-
-    <section id="suite" class="section">
-      <div class="sectionTitle"><h3>The Procurithm Suite</h3><span>Offline tools • consistent structure • ready to ship internally</span></div>
-      <div class="grid">
-        <div class="tile col4">
-          <h4>Price Benchmark & Uplift Guard</h4>
-          <p>Benchmarks renewal uplifts, generates MESO options (A/B/C), and drafts a counter email aligned to CPI caps & governance protections.</p>
-          <ul class="bul"><li>Uplift vs last net + CPI cap target</li><li>Recommended counter‑levers</li><li>Copy‑paste counter email draft</li></ul>
-          <div class="tagRow"><span class="tag">renewals</span><span class="tag">pricing</span><span class="tag">MESO</span></div>
-        </div>
-
-        <div class="tile col4">
-          <h4>Governance & Risk Heatmap</h4>
-          <p>Paste contract language and detect risky patterns; get redline suggestions and severity‑tagged evidence.</p>
-          <ul class="bul"><li>Audit limits & cure periods</li><li>Metric freeze / indirect access</li><li>Data residency & DPA/SCCs</li><li>Termination assistance & data egress</li></ul>
-          <div class="tagRow"><span class="tag">legal</span><span class="tag">privacy</span><span class="tag">risk</span></div>
-        </div>
-
-        <div class="tile col4">
-          <h4>Renewal Risk Dashboard</h4>
-          <p>Track renewal dates, signals, value at risk, and fiscal year‑end timing opportunities across vendors.</p>
-          <ul class="bul"><li>Add contracts & risk signals</li><li>Portfolio summary: value at risk</li><li>Export CSV/JSON</li></ul>
-          <div class="tagRow"><span class="tag">portfolio</span><span class="tag">calendar</span><span class="tag">risk</span></div>
-        </div>
-
-        <div class="tile col6">
-          <h4>Compliance Trade‑Off Matrix</h4>
-          <p>Map compliance obligations to commercial givebacks to negotiate safely (e.g., DPA/SCCs ↔ credits, SLA, price cap, modular scope).</p>
-          <ul class="bul"><li>Choose obligations & desired givebacks</li><li>Build “ask set” to present as structured package</li><li>Minimize concessions without losing protections</li></ul>
-          <div class="tagRow"><span class="tag">compliance</span><span class="tag">value exchange</span></div>
-        </div>
-
-        <div class="tile col6">
-          <h4>SLA & Service Credit Analyzer + Invoice Auditor</h4>
-          <p>Quickly scan SLA text for missing definitions and weak remedies. Audit invoice CSVs for anomalies vs caps/last net.</p>
-          <ul class="bul"><li>Uptime/measurement windows & exclusions</li><li>Credit triggers, caps, and chronic failure remedies</li><li>Invoice checks: caps, unexpected uplift, mismatched totals</li></ul>
-          <div class="tagRow"><span class="tag">SLA</span><span class="tag">billing</span><span class="tag">controls</span></div>
-        </div>
-
-        <div class="tile col12">
-          <h4>Command Center</h4>
-          <p>One cockpit that links the suite: switch modules with tabs, keep a consistent UI, and run the same process across vendors.</p>
-          <div class="tagRow"><span class="tag">all‑in‑one</span><span class="tag">offline</span><span class="tag">portable</span></div>
-        </div>
+      <h2>Renewal control, negotiation leverage, and risk clarity — in one offline bundle.</h2>
+      <p>
+        Procurithm is a practical toolkit for buyers: renewal uplift checks, contract risk scanning patterns,
+        negotiation playbooks, and vendor portfolio control. Delivered as a simple zip you can run locally.
+      </p>
+      <div class="chips" aria-label="Highlights">
+        <span class="chip">Offline</span>
+        <span class="chip">Single-org license</span>
+        <span class="chip">No accounts</span>
+        <span class="chip">Procurement-first</span>
+        <span class="chip">SaaS renewals</span>
       </div>
     </section>
 
-    <section id="pricing" class="section">
-      <div class="sectionTitle"><h3>Bundles & Pricing</h3><span>Reasonable, transparent, and built for direct sales</span></div>
-      <div class="grid">
-        <a href="https://procurithm.gumroad.com/l/sokuvq" target="_blank" rel="noopener" style="display:block; text-decoration:none;"><div class="pricing col4">
-          <div class="priceTop"><h4>Starter Pack</h4><div class="price">€39 <small>single org</small></div></div></a>
-          <div class="accentLine"></div>
-          <p class="muted">Policies, request templates, evaluation checklist, risk/security guidance, and baseline contract essentials.</p>
-          <ul class="bul"><li>Best for standardizing intake + approvals</li><li>Includes printable templates</li></ul>
-        </div>
-
-        <a href="https://procurithm.gumroad.com/l/rsbuns" target="_blank" rel="noopener" style="display:block; text-decoration:none;"><div class="pricing col4">
-          <div class="priceTop"><h4>Negotiation Toolkit</h4><div class="price">€89 <small>single org</small></div></div></a>
-          <div class="accentLine"></div>
-          <p class="muted">Uplift Guard + negotiation playbooks, pushbacks, and ready-to-send counter language.</p>
-          <ul class="bul"><li>Best for renewals & commercial pressure</li><li>MESO options + counter email drafts</li></ul>
-        </div>
-
-        <a href="https://procurithm.gumroad.com/l/hxodp" target="_blank" rel="noopener" style="display:block; text-decoration:none;"><div class="pricing col4">
-          <div class="priceTop"><h4>Complete Suite</h4><div class="price">€249 <small>single org</small></div></div></a>
-          <div class="accentLine"></div>
-          <p class="muted">Everything: Starter Pack + all tools + Command Center cockpit.</p>
-          <ul class="bul"><li>Best value for teams with recurring renewals</li><li>Export artifacts for Finance/IT/Sec/Legal</li></ul>
-        </div>
-
-        <div class="col12">
-          <table class="compare" aria-label="Bundle comparison">
-            <thead><tr><th>Capability</th><th>Starter Pack</th><th>Negotiation Toolkit</th><th>Complete Suite</th></tr></thead>
-            <tbody>
-              <tr><td>Request & evaluation templates</td><td class="ok">✓</td><td class="muted">—</td><td class="ok">✓</td></tr>
-              <tr><td>Renewal uplift benchmarking + MESO options</td><td class="muted">—</td><td class="ok">✓</td><td class="ok">✓</td></tr>
-              <tr><td>Contract risk scanning (audit, metrics, DPA/SCCs, termination)</td><td class="muted">Guidance</td><td class="muted">—</td><td class="ok">✓</td></tr>
-              <tr><td>Portfolio renewal dashboard + exports</td><td class="muted">—</td><td class="muted">—</td><td class="ok">✓</td></tr>
-              <tr><td>Compliance trade‑off matrix</td><td class="muted">Guidance</td><td class="muted">—</td><td class="ok">✓</td></tr>
-              <tr><td>SLA analyzer + invoice auditor</td><td class="muted">—</td><td class="muted">—</td><td class="ok">✓</td></tr>
-              <tr><td>Command Center cockpit</td><td class="muted">—</td><td class="muted">—</td><td class="ok">✓</td></tr>
-            </tbody>
-          </table>
-          <div class="fine" style="margin-top:10px;">
-            Note: Pricing is a suggested baseline.</div>
-        <div class="tile col12" style="margin-top:14px;">
-          <h4 style="margin:0 0 8px;">Gumroad links</h4>
-          <ul class="bul">
-            <li><a href="https://procurithm.gumroad.com/l/guacy" target="_blank" rel="noopener" style="text-decoration:underline; text-underline-offset:3px">Contract & Renewal Risk Check (Lite)</a></li>
-<li><a href="https://procurithm.gumroad.com/l/sokuvq" target="_blank" rel="noopener" style="text-decoration:underline; text-underline-offset:3px">Starter Pack</a></li>
-<li><a href="https://procurithm.gumroad.com/l/rsbuns" target="_blank" rel="noopener" style="text-decoration:underline; text-underline-offset:3px">Negotiation Toolkit</a></li>
-<li><a href="https://procurithm.gumroad.com/l/hxodp" target="_blank" rel="noopener" style="text-decoration:underline; text-underline-offset:3px">Complete Suite</a></li>
-<li><a href="https://procurithm.gumroad.com/l/rhgknt" target="_blank" rel="noopener" style="text-decoration:underline; text-underline-offset:3px">Negotiation Guide (PDF)</a></li>
-          </ul>
-        </div>
-      </div> Sell customization separately (workflow fit, templates, naming conventions).
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="contact">
-      <div class="sectionTitle"><h3>Direct outreach play</h3><span>No LinkedIn required</span></div>
-      <div class="grid">
-        <div class="tile col6">
-          <h4>10‑minute demo script</h4>
-          <ul class="bul">
-            <li><span class="kbd">1</span> Show uplift vs CPI cap + “counter email” output.</li>
-            <li><span class="kbd">2</span> Paste a clause → show risk findings with evidence.</li>
-            <li><span class="kbd">3</span> Offer the Complete Suite (offline zip) + optional setup.</li>
-          </ul>
-        </div>
-        <div class="tile col6">
-          <h4>Call to action (edit this)</h4>
-          <p>Replace the email address with yours when ready.</p>
-          <div class="ctaRow" style="margin-top:12px">
-            <a class="btn" href="mailto:edgemap@proton.me?subject=Procurithm%20demo%20request">Email to request demo</a>
-            <a class="btn ghost" href="#pricing">View bundles</a>
-          </div>
-          <div class="hint">Delivery: zip package + “open index.html” quickstart. No install, no accounts.</div>
-        </div>
-      </div>
-    </section>
-
-    <div class="foot">
-      <div>© <span id="yy"></span> Procurithm — software procurement toolkit (offline HTML)</div>
-      <div>Non‑infringing branding • single‑organization license • no redistribution · Support: edgemap@proton.me</div>
+    <div class="sectionTitle" id="products">
+      <h3>Products</h3>
+      <span>Gumroad links</span>
     </div>
+
+    <section class="grid links" aria-label="Product links">
+      <div class="card col12">
+        <h4>Gumroad links</h4>
+        <ul>
+          <li><a href="https://pocurithm.gumroad.com/l/guacy" target="_blank" rel="noopener">Contract &amp; Renewal Risk Check (SaaS / Services) — Lite</a></li>
+          <li><a href="https://pocurithm.gumroad.com/l/hxodp" target="_blank" rel="noopener">Procurithm — Full Procurement Suite (Renewal &amp; Vendor Portfolio Control)</a></li>
+          <li><a href="https://pocurithm.gumroad.com/l/rsbuns" target="_blank" rel="noopener">Procurithm — SaaS Negotiation Toolkit (Pricing, Exit &amp; Commercial Risk)</a></li>
+          <li><a href="https://pocurithm.gumroad.com/l/sokuvo" target="_blank" rel="noopener">Procurithm — SaaS Procurement Starter Pack (Buyer-Side Playbooks)</a></li>
+                    <li><a href="https://pocurithm.gumroad.com/l/rhgknt" target="_blank" rel="noopener">Procurithm — Procurement &amp; Software Negotiation Guide (PDF)</a></li>
+        </ul>
+        <p class="muted" style="margin-top:10px">
+          Tip: Deliver as a zip package + “open index.html” quickstart. Optional customization: approval workflow, templates, naming conventions.
+        </p>
+      </div>
+    </section>
+
+    <div class="sectionTitle" id="contact">
+      <h3>Contact</h3>
+      <span>Direct outreach</span>
+    </div>
+
+    <section class="grid" aria-label="Contact">
+      <div class="card col6">
+        <h4>Fastest path</h4>
+        <p class="muted">Email for a demo request, questions, or bundle guidance.</p>
+        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px">
+          <a class="btn primary" href="mailto:edgemap@proton.me?subject=Procurithm%20demo%20request">edgemap@proton.me</a>
+          <a class="btn ghost" href="#products">Browse products</a>
+        </div>
+      </div>
+      <div class="card col6">
+        <h4>Delivery</h4>
+        <ul>
+          <li>Zip package + quickstart</li>
+          <li>Runs locally (offline-first)</li>
+          <li>No accounts, no external dependencies</li>
+        </ul>
+      </div>
+    </section>
+
+    <footer class="foot">
+      <div>© <span id="yy"></span> Procurithm — offline procurement toolkit</div>
+      <div>Support: <a href="mailto:edgemap@proton.me">edgemap@proton.me</a></div>
+    </footer>
   </div>
 
-  <script>document.getElementById("yy").textContent = new Date().getFullYear();</script>
-
-  <div class="wrap footer">
-    <div>© 2025 Procurithm. All rights reserved.</div>
-    <div class="muted">Offline-first procurement toolkit. Single-file HTML (no external libraries; local calculators only).</div>
+  <div class="rights" aria-label="Copyright notice">
+    <div class="inner">© Procurithm. All rights reserved. Redistribution or resale is prohibited without written permission.</div>
   </div>
 
-<div class="rights-banner" aria-label="Copyright notice">
-  <div class="rights-inner">© Procurithm. All rights reserved. Redistribution or resale is prohibited without written permission.</div>
-</div>
+  <script>
+    document.getElementById("yy").textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
