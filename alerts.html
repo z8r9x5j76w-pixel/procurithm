@@ -1,36 +1,455 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2685.3">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; -webkit-text-stroke: #000000}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; -webkit-text-stroke: #000000; min-height: 14.0px}
-    span.s1 {font-kerning: none}
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Procurithm — Alerts</title>
+  <meta name="description" content="Procurement timing alerts and renewal leverage reminders." />
+  <style>
+    :root{
+      --bg0:#050914;
+      --bg1:#081228;
+      --card: rgba(255,255,255,.06);
+      --stroke: rgba(255,255,255,.12);
+      --txt:#EAF0FF;
+      --muted: rgba(234,240,255,.72);
+      --muted2: rgba(234,240,255,.55);
+      --accent:#4DA3FF;
+      --accent2:#7B5CFF;
+      --good:#3CE6A8;
+      --shadow: 0 18px 60px rgba(0,0,0,.55);
+      --radius: 22px;
+      --radius2: 16px;
+      --max: 1120px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: var(--sans);
+      color: var(--txt);
+      background:
+        radial-gradient(1200px 700px at 20% 10%, rgba(77,163,255,.22), transparent 55%),
+        radial-gradient(1000px 600px at 80% 15%, rgba(123,92,255,.20), transparent 55%),
+        radial-gradient(900px 600px at 50% 95%, rgba(60,230,168,.10), transparent 55%),
+        linear-gradient(180deg, var(--bg0), var(--bg1) 60%, #050816 100%);
+      overflow-x:hidden;
+    }
+    a{color:inherit; text-decoration:none}
+    .wrap{max-width: var(--max); margin: 0 auto; padding: 28px 18px 80px}
+    .topbar{
+      position: sticky; top:0; z-index:10;
+      backdrop-filter: blur(10px);
+      background: linear-gradient(180deg, rgba(5,9,20,.78), rgba(5,9,20,.35));
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .topbar .inner{
+      max-width: var(--max); margin: 0 auto;
+      display:flex; align-items:center; justify-content:space-between;
+      padding: 14px 18px;
+    }
+    .brand{display:flex; align-items:center; gap:12px}
+    .mark{
+      width:36px; height:36px; border-radius: 12px;
+      background:
+        radial-gradient(12px 12px at 28% 32%, rgba(255,255,255,.75), transparent 60%),
+        radial-gradient(14px 14px at 70% 70%, rgba(255,255,255,.35), transparent 65%),
+        linear-gradient(135deg, rgba(77,163,255,1), rgba(123,92,255,1));
+      box-shadow: 0 10px 30px rgba(77,163,255,.18);
+      border: 1px solid rgba(255,255,255,.25);
+    }
+    .brand h1{font-size: 16px; margin:0; letter-spacing:.2px}
+    .brand .sub{font-size: 12px; color: var(--muted2); margin-top:2px}
+    .nav{display:flex; gap: 10px; align-items:center; flex-wrap:wrap; justify-content:flex-end}
+    .pill{
+      font-size: 12px; color: var(--muted);
+      padding: 9px 12px; border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.04);
+    }
+    .pill strong{color: var(--txt); font-weight:600}
+    .btn{
+      display:inline-flex; align-items:center; gap:10px;
+      padding: 10px 14px; border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.16);
+      background: linear-gradient(135deg, rgba(77,163,255,.95), rgba(123,92,255,.85));
+      box-shadow: 0 14px 45px rgba(77,163,255,.18);
+      font-weight: 650;
+      font-size: 13px;
+      cursor:pointer;
+      user-select:none;
+    }
+    .btn.ghost{
+      background: rgba(255,255,255,.04);
+      box-shadow:none;
+      font-weight:600;
+    }
+    .hero{
+      margin-top: 26px;
+      display:grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+    @media (max-width: 980px){ .hero{grid-template-columns: 1fr;} }
+    .card{
+      background: var(--card);
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .heroLeft{padding: 28px}
+    .kicker{
+      display:inline-flex; gap:10px; align-items:center;
+      font-size: 12px; color: var(--muted);
+      border:1px solid rgba(255,255,255,.14);
+      padding: 7px 10px; border-radius: 999px;
+      background: rgba(255,255,255,.04);
+    }
+    .dot{width:8px;height:8px;border-radius:99px;background: var(--good); box-shadow: 0 0 0 4px rgba(60,230,168,.12);}
+    h2{
+      margin: 14px 0 10px;
+      font-size: 44px;
+      line-height: 1.06;
+      letter-spacing: -0.6px;
+    }
+    @media (max-width: 520px){ h2{font-size: 36px} }
+    .lead{
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.55;
+      margin: 0 0 18px;
+      max-width: 70ch;
+    }
+    .ctaRow{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
+    .hint{font-size: 12px; color: var(--muted2); margin-top: 10px}
+    .chips{display:flex; gap:10px; flex-wrap:wrap; margin-top: 18px}
+    .chip{
+      font-size: 12px; color: var(--muted);
+      padding: 8px 10px; border-radius: 999px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.12);
+    }
+    .heroRight{padding: 18px}
+    .mini{
+      padding: 16px;
+      border-radius: var(--radius2);
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.12);
+      margin-bottom: 12px;
+    }
+    .mini h3{margin:0 0 6px; font-size: 13px; letter-spacing:.25px}
+    .mini p{margin:0; color: var(--muted); font-size: 12.5px; line-height:1.5}
+    .metricRow{display:grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 10px}
+    @media (max-width: 520px){ .metricRow{grid-template-columns: 1fr} }
+    .metric{
+      border-radius: 16px;
+      background: rgba(0,0,0,.18);
+      border: 1px solid rgba(255,255,255,.10);
+      padding: 12px;
+    }
+    .metric .k{font-size: 11px; color: var(--muted2)}
+    .metric .v{font-size: 18px; margin-top: 4px; font-weight: 750}
+    .metric .s{font-size: 11px; color: var(--muted); margin-top: 2px}
+    .section{margin-top: 20px; padding: 0 0 10px}
+    .sectionTitle{
+      display:flex; align-items:baseline; justify-content:space-between; gap: 12px;
+      margin: 26px 0 10px;
+    }
+    .sectionTitle h3{margin:0; font-size: 16px; letter-spacing:.2px}
+    .sectionTitle span{color: var(--muted2); font-size: 12px}
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 14px;
+    }
+    .col4{grid-column: span 4}
+    .col6{grid-column: span 6}
+    .col12{grid-column: span 12}
+    @media (max-width: 980px){ .col4,.col6{grid-column: span 12} }
+    .tile{
+      padding: 18px;
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.12);
+      height: 100%;
+    }
+    .tile h4{margin:0 0 8px; font-size: 14px}
+    .tile p{margin:0; color: var(--muted); font-size: 12.75px; line-height:1.55}
+    .bul{margin: 12px 0 0; padding:0 0 0 16px; color: var(--muted); font-size: 12.5px; line-height:1.55}
+    .bul li{margin: 6px 0}
+    .tagRow{display:flex; gap:8px; flex-wrap:wrap; margin-top: 12px}
+    .tag{
+      font-size: 11px; color: var(--muted);
+      border: 1px solid rgba(255,255,255,.14);
+      padding: 5px 8px; border-radius: 999px;
+      background: rgba(0,0,0,.18);
+    }
+    .pricing{
+      padding: 18px;
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.04));
+      border: 1px solid rgba(255,255,255,.12);
+    }
+    .priceTop{display:flex; align-items:flex-start; justify-content:space-between; gap:10px}
+    .priceTop h4{margin:0; font-size: 14px}
+    .price{
+      font-size: 28px; font-weight: 850;
+      letter-spacing: -0.4px;
+    }
+    .price small{font-size: 12px; color: var(--muted); font-weight:600}
+    .accentLine{
+      height: 2px; width: 100%;
+      background: linear-gradient(90deg, rgba(77,163,255,1), rgba(123,92,255,1));
+      border-radius: 999px;
+      margin: 12px 0 10px;
+      opacity: .85;
+    }
+    .compare{
+      width:100%;
+      border-collapse: collapse;
+      overflow:hidden;
+      border-radius: var(--radius);
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+    }
+    .compare th,.compare td{
+      padding: 12px 12px;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      font-size: 12.5px;
+      text-align:left;
+      vertical-align: top;
+    }
+    .compare th{color: var(--muted); font-weight:650}
+    .ok{color: rgba(60,230,168,.95); font-weight:800}
+    .muted{color: var(--muted)}
+    .fine{color: var(--muted2); font-size: 12px}
+    .foot{
+      margin-top: 26px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255,255,255,.10);
+      color: var(--muted2);
+      font-size: 12px;
+      display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;
+    }
+    .kbd{
+      font-family: var(--mono);
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.18);
+      color: rgba(234,240,255,.82);
+    }
+  
+/* === Procurithm QA layout guard (non-content) === */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+:root { --maxw: 1240px; }
+
+.wrap { max-width: var(--maxw) !important; margin-left:auto !important; margin-right:auto !important; }
+
+header { display:flex !important; align-items:flex-start !important; justify-content:space-between !important; gap:12px !important; flex-wrap:wrap !important; }
+.brand { display:flex; align-items:center; gap:10px; padding-top:2px; }
+.brand img { height:22px; width:auto; display:block; filter: drop-shadow(0 6px 22px rgba(0,0,0,.35)); opacity:.95; }
+
+.top-actions { display:flex !important; gap:10px !important; flex-wrap:wrap !important; justify-content:flex-end !important; }
+
+.grid, .kpis, .cards, .card-grid, .section-grid, .layout, .cols, .columns {
+  display:grid !important;
+  gap:14px !important;
+  align-items:stretch !important;
+  grid-auto-rows: minmax(0, auto) !important;
+}
+
+.card, .panel, .box, .tile, .section, .widget, .block, .balloon {
+  position: relative !important;
+  height: auto !important;
+  min-height: unset !important;
+  overflow: hidden !important;
+}
+
+pre, code, textarea {
+  max-width: 100% !important;
+}
+
+pre { white-space: pre-wrap !important; overflow:auto !important; }
+textarea { resize: vertical !important; }
+
+.footer {
+  margin-top: 18px;
+  padding: 14px 0 26px 0;
+  border-top: 1px solid rgba(255,255,255,.10);
+  color: rgba(255,255,255,.60);
+  font-size: 12px;
+  line-height: 1.4;
+}
+.footer .muted { color: rgba(255,255,255,.48); }
+@media print {
+  header .top-actions, header .brand { display:none !important; }
+  .footer { color: #444 !important; border-top: 1px solid #ddd !important; }
+}
+
+
+/* === Procurithm layout hotfix (non-content) === */
+:root { --pillFont: 0.85rem; --pillPadV: 8px; --pillPadH: 12px; }
+
+.pill, .badge, .tag {
+  font-size: var(--pillFont) !important;
+  padding: var(--pillPadV) var(--pillPadH) !important;
+  line-height: 1.15 !important;
+  max-width: 100%;
+  white-space: normal;
+}
+
+.card, .panel, .box {
+  min-height: unset !important;
+}
+
+.card ul, .panel ul, .box ul { margin-top: 10px !important; }
+.card li, .panel li, .box li { margin: 8px 0 !important; line-height: 1.35 !important; }
+
+.small, .muted, .subtle { opacity: 1 !important; } /* avoid invisible text on some screens */
+.small { color: var(--muted) !important; }
+
+@media (max-width: 980px){
+  .grid, .two, .cols, .layout { grid-template-columns: 1fr !important; }
+}
+
+.procurithm-footerbar{
+  margin-top: 22px;
+  padding: 14px 18px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(0,0,0,.22);
+  color: rgba(255,255,255,.72);
+  font-size: 12px;
+  line-height: 1.35;
+}
+@media print{
+  .procurithm-footerbar{ border: 1px solid #bbb; background: #fff; color: #333; }
+}
+
+
+/* Procurithm legal footer */
+.procurithm-legal-footer{
+  margin-top: 18px;
+  padding: 10px 12px;
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 14px;
+  background: rgba(0,0,0,0.18);
+  color: rgba(255,255,255,0.72);
+  font-size: 12px;
+  line-height: 1.35;
+  text-align: center;
+}
+@media print{
+  .procurithm-legal-footer{ break-inside: avoid; }
+}
+
+/* Procurithm rights notice (always visible) */
+body{ padding-bottom: 56px; }
+.rights-banner{
+  position: fixed;
+  left: 16px;
+  right: 16px;
+  bottom: 12px;
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+.rights-banner .rights-inner{
+  pointer-events: auto;
+  font-size: 12px;
+  letter-spacing: 0.2px;
+  color: rgba(255,255,255,0.78);
+  background: rgba(0,0,0,0.35);
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 999px;
+  padding: 10px 14px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.25);
+}
+@media print{
+  body{ padding-bottom: 0 !important; }
+  .rights-banner{ position: static; margin-top: 14px; }
+  .rights-banner .rights-inner{ background: transparent; color: #111; border: none; box-shadow: none; }
+}
+</style>
+  <style>
+    /* Alerts page content spacing, using existing styles */
+    .pageTitle{margin-top: 22px}
+    .contentCard{padding: 22px}
+    .contentCard hr{border:0;border-top:1px solid rgba(255,255,255,.10);margin:18px 0}
+    .contentCard a{text-decoration:underline; text-underline-offset:3px}
+    .contentCard ul{margin: 10px 0 0; padding-left: 18px; color: var(--muted);}
+    .contentCard li{margin: 8px 0; line-height: 1.4;}
   </style>
 </head>
 <body>
-<p class="p1"><span class="s1">&lt;!DOCTYPE html&gt;</span></p>
-<p class="p1"><span class="s1">&lt;html&gt;</span></p>
-<p class="p1"><span class="s1">&lt;head&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;title&gt;Alerts | Procurithm&lt;/title&gt;</span></p>
-<p class="p1"><span class="s1">&lt;/head&gt;</span></p>
-<p class="p1"><span class="s1">&lt;body&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">&lt;h1&gt;Alerts&lt;/h1&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">&lt;p&gt;</span></p>
-<p class="p1"><span class="s1">Short notes on software renewals, contracts, and regulatory changes.</span></p>
-<p class="p1"><span class="s1">&lt;/p&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">&lt;p&gt;</span></p>
-<p class="p1"><span class="s1">&lt;a href="index.html"&gt;← Back to Procurithm&lt;/a&gt;</span></p>
-<p class="p1"><span class="s1">&lt;/p&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">&lt;/body&gt;</span></p>
-<p class="p1"><span class="s1">&lt;/html&gt;</span></p>
+  <div class="topbar">
+    <div class="inner">
+      <div class="brand">
+        <div class="mark" aria-hidden="true"></div>
+        <div>
+          <h1>Procurithm</h1>
+          <div class="sub">Offline procurement OS for software renewals, negotiation & risk</div>
+        </div>
+      </div>
+
+  <div class="wrap">
+    <section class="card heroLeft contentCard">
+      <div class="kicker"><span class="dot"></span> Alerts — timing, notice windows, leverage</div>
+      <h2 class="pageTitle">Renewal timing reminders</h2>
+      <p class="lead">
+        Short, practical reminders you can share internally. Support: <a href="mailto:edgemap@proton.me?subject=Procurithm%20support">edgemap@proton.me</a>
+      </p>
+
+      
+<hr>
+
+<h2>Missed notice periods kill renewal leverage</h2>
+
+<p>
+In many software contracts, once the notice period passes, pricing and terms are effectively locked.
+At that point, discussions are usually about damage control, not negotiation.
+</p>
+
+<p>
+This is rarely a negotiation failure — it’s a visibility and timing failure.
+</p>
+
+<hr>
+
+
+      <h2>All Procurithm packs (Gumroad)</h2>
+      <p class="lead">Direct links to the current catalog:</p>
+      <ul class="bul">
+        <li><a href="https://procurithm.gumroad.com/l/guacy" target="_blank" rel="noopener">Contract & Renewal Risk Check (SaaS / Services) — Lite</a></li>
+<li><a href="https://procurithm.gumroad.com/l/hxodp" target="_blank" rel="noopener">Procurithm — Full Procurement Suite (Renewal & Vendor Portfolio Control)</a></li>
+<li><a href="https://procurithm.gumroad.com/l/rsbuns" target="_blank" rel="noopener">Procurithm — SaaS Negotiation Toolkit (Pricing, Exit & Commercial Risk)</a></li>
+<li><a href="https://procurithm.gumroad.com/l/sokuvq" target="_blank" rel="noopener">Procurithm — SaaS Procurement Starter Pack (Buyer‑Side Playbooks)</a></li>
+<li><a href="https://procurithm.gumroad.com/l/rhgknt" target="_blank" rel="noopener">Procurithm — Procurement & Software Negotiation Guide (PDF)</a></li>
+<li><a href="https://procurithm.gumroad.com/l/eztyt" target="_blank" rel="noopener">One‑Page Risk Discipline Sheet (Notion)</a></li>
+<li><a href="https://procurithm.gumroad.com/l/uckph" target="_blank" rel="noopener">Daily Market Decision Journal (Notion)</a></li>
+<li><a href="https://procurithm.gumroad.com/l/rvqla" target="_blank" rel="noopener">Ultra Minimal Trading Journal (Notion)</a></li>
+<li><a href="https://procurithm.gumroad.com/l/nezpku" target="_blank" rel="noopener">Systematic Trading Journal OS — Execution Framework</a></li>
+      </ul>
+    </section>
+
+    <div class="procurithm-legal-footer">
+      Support: <a href="mailto:edgemap@proton.me?subject=Procurithm%20support">edgemap@proton.me</a> · © Procurithm. All rights reserved.
+    </div>
+  </div>
+
+  <div class="rights-banner" aria-label="Copyright notice">
+    <div class="rights-inner">© Procurithm. All rights reserved. Redistribution or resale is prohibited without written permission.</div>
+  </div>
 </body>
 </html>
