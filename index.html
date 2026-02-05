@@ -2,81 +2,171 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Procurithm — 30-Day SaaS Renewal Price Increase Playbook</title>
-  <meta name="description" content="Vendor raised your SaaS price and renewal is due in ≤30 days? Download a 30–60 minute decision screen: risk, leverage, and next steps." />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Procurithm — SaaS Renewal & Negotiation Toolkit</title>
+  <meta name="description" content="Offline-first procurement toolkit for SaaS renewals, price increases, negotiation, and contract risk." />
+
   <style>
-    body {
-      margin: 0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-      background: #0b1020;
-      color: #f4f6fb;
-      line-height: 1.5;
+    :root{
+      --bg0:#050914;
+      --bg1:#081228;
+      --card: rgba(255,255,255,.06);
+      --stroke: rgba(255,255,255,.12);
+      --txt:#EAF0FF;
+      --muted: rgba(234,240,255,.72);
+      --muted2: rgba(234,240,255,.55);
+      --accent:#4DA3FF;
+      --accent2:#7B5CFF;
+      --good:#3CE6A8;
+      --shadow: 0 18px 60px rgba(0,0,0,.55);
+      --radius: 22px;
+      --radius2: 16px;
+      --max: 1120px;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
     }
-    .wrap {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 48px 20px;
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:var(--sans);
+      color:var(--txt);
+      background:
+        radial-gradient(1200px 700px at 20% 10%, rgba(77,163,255,.22), transparent 55%),
+        radial-gradient(1000px 600px at 80% 15%, rgba(123,92,255,.20), transparent 55%),
+        linear-gradient(180deg, var(--bg0), var(--bg1) 60%, #050816 100%);
     }
-    h1 {
-      font-size: 40px;
-      line-height: 1.1;
-      margin-bottom: 16px;
+    a{color:inherit;text-decoration:none}
+    .topbar{
+      position:sticky;top:0;z-index:20;
+      backdrop-filter: blur(10px);
+      background: linear-gradient(180deg, rgba(5,9,20,.8), rgba(5,9,20,.35));
+      border-bottom:1px solid rgba(255,255,255,.08);
     }
-    p {
-      max-width: 720px;
-      color: #cfd5ff;
+    .topbar .inner{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:14px 18px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      flex-wrap:wrap;
     }
-    .cta {
-      margin-top: 24px;
+    .brand{display:flex;gap:12px;align-items:center}
+    .mark{
+      width:34px;height:34px;border-radius:10px;
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      box-shadow:0 10px 30px rgba(77,163,255,.25);
     }
-    a.button {
-      display: inline-block;
-      padding: 14px 18px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, #7c5cff, #24d18f);
-      color: #081018;
-      text-decoration: none;
-      font-weight: 600;
+    .brand strong{font-size:15px}
+    .brand span{font-size:12px;color:var(--muted2)}
+    .nav{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+    .nav a{
+      font-size:13px;
+      color:var(--muted);
+      padding:8px 10px;
+      border-radius:999px;
     }
-    ul {
-      margin-top: 28px;
-      padding-left: 18px;
+    .nav a:hover{background:rgba(255,255,255,.06)}
+    .nav .cta{
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      color:#081018;
+      font-weight:700;
     }
-    li {
-      margin-bottom: 10px;
+    .wrap{max-width:var(--max);margin:0 auto;padding:40px 18px 80px}
+    .hero{
+      background:var(--card);
+      border:1px solid var(--stroke);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:32px;
     }
-    footer {
-      margin-top: 60px;
-      font-size: 13px;
-      color: #9aa1d6;
+    h1{
+      font-size:42px;
+      line-height:1.05;
+      margin:0 0 12px;
+      letter-spacing:-.5px;
+    }
+    p.lead{
+      font-size:15px;
+      color:var(--muted);
+      max-width:70ch;
+    }
+    .ctaRow{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      padding:12px 16px;
+      border-radius:999px;
+      font-weight:700;
+      border:1px solid rgba(255,255,255,.16);
+    }
+    .btn.primary{
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      color:#081018;
+      border:none;
+    }
+    .btn.ghost{background:rgba(255,255,255,.05);color:var(--txt)}
+    footer{
+      margin-top:60px;
+      padding-top:18px;
+      border-top:1px solid rgba(255,255,255,.1);
+      font-size:12px;
+      color:var(--muted2);
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
     }
   </style>
 </head>
+
 <body>
-  <div class="wrap">
-    <h1>SaaS vendor raised prices and renewal is due in ≤30 days?</h1>
-    <p>
-      This page gives you a fast, decision‑first way to assess renewal risk, pricing leverage,
-      and next steps before you reply to the vendor.
-      It is designed for renewal pressure — not theory.
-    </p>
-
-    <div class="cta">
-      <a class="button" href="procurithm-saas-renewal-risk-check-lite.pdf" target="_blank">
-        Download the 30‑Day SaaS Renewal Risk Check (PDF)
-      </a>
+  <div class="topbar">
+    <div class="inner">
+      <div class="brand">
+        <div class="mark"></div>
+        <div>
+          <strong>Procurithm</strong><br>
+          <span>Offline procurement toolkit</span>
+        </div>
+      </div>
+      <nav class="nav">
+        <a href="index.html">Home</a>
+        <a href="alerts.html">Alerts</a>
+        <a href="#bundles">Bundles</a>
+        <a class="cta" href="https://gumroad.com">Gumroad</a>
+      </nav>
     </div>
+  </div>
 
-    <ul>
-      <li>30–60 minute workflow to a Safe / Caution / Risk signal</li>
-      <li>Focus on renewal traps: auto‑renewal, uplifts, exit, liability, data</li>
-      <li>Turns risk into a concrete negotiation agenda</li>
-    </ul>
+  <div class="wrap">
+    <section class="hero">
+      <h1>SaaS renewal coming up with a price increase?</h1>
+      <p class="lead">
+        Procurithm gives you a fast, structured way to assess renewal risk, pricing leverage,
+        and negotiation options — without spreadsheets, accounts, or cloud tools.
+      </p>
+      <div class="ctaRow">
+        <a class="btn primary" href="procurithm-saas-renewal-risk-check-lite.pdf" target="_blank">
+          Download 30‑Day Renewal Risk Check
+        </a>
+        <a class="btn ghost" href="#bundles">View full kit</a>
+      </div>
+    </section>
+
+    <section id="bundles" style="margin-top:34px">
+      <h2 style="font-size:20px;margin-bottom:10px">Available kits</h2>
+      <p class="lead">
+        Starter Pack, Negotiation Toolkit, and Complete Suite — available via Gumroad.
+      </p>
+    </section>
 
     <footer>
-      © 2026 Procurithm · Practical decision aid · Not legal advice
+      <div>© <span id="y"></span> Procurithm</div>
+      <div>Offline-first · Single-organization license · No redistribution</div>
     </footer>
   </div>
+
+  <script>document.getElementById("y").textContent = new Date().getFullYear();</script>
 </body>
 </html>
