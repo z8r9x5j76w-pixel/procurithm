@@ -218,51 +218,7 @@
       color: var(--mid);
       margin-bottom: 1.5rem;
     }
-    .form-card {
-      background: var(--navy);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.75rem;
-    }
-    .form-row {
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-    }
-    .form-input {
-      width: 100%;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid var(--border);
-      border-radius: 7px;
-      color: var(--light);
-      font-size: 0.95rem;
-      padding: 0.75rem 1rem;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-    .form-input:focus { border-color: var(--blue); }
-    .form-input::placeholder { color: var(--mid); }
-    .btn-download {
-      width: 100%;
-      background: var(--blue);
-      color: #0b0f1a;
-      border: none;
-      border-radius: 7px;
-      font-size: 1rem;
-      font-weight: 800;
-      padding: 0.85rem 1rem;
-      cursor: pointer;
-      transition: opacity 0.2s, transform 0.1s;
-      letter-spacing: 0.02em;
-    }
-    .btn-download:hover { opacity: 0.88; transform: translateY(-1px); }
-    .btn-download:active { transform: translateY(0); }
-    .form-note {
-      font-size: 0.72rem;
-      color: var(--mid);
-      margin-top: 0.85rem;
-      line-height: 1.5;
-    }
+
 
     /* ── Success state ── */
     .success-card {
@@ -298,9 +254,9 @@
       text-decoration: none;
       transition: opacity 0.2s;
     }
-    .btn-go:hover { opacity: 0.85; }
 
-    /* ── Preview strip ── */
+
+
     .preview {
       max-width: 680px;
       margin: 3rem auto 0;
@@ -454,26 +410,11 @@
     <h2>Get the free playbook</h2>
     <p>Enter your email and get instant access. No spam, no account required.</p>
 
-    <div class="form-card" id="form-card">
-      <div class="form-row">
-        <input
-          type="email"
-          id="email-input"
-          class="form-input"
-          placeholder="your@email.com"
-          autocomplete="email"
-        />
-        <button class="btn-download" onclick="handleSubmit()">
-          Download Free Playbook →
-        </button>
-      </div>
-      <p class="form-note">
-        No spam. No account. Unsubscribe any time.<br>
-        You'll also receive occasional procurement tips from Procurithm.
-      </p>
-    </div>
+    <!-- MailerLite embedded form -->
+    <div class="ml-embedded" data-form="b96fBv"></div>
 
-    <div class="success-card" id="success-card">
+    <!-- After signup: show download link -->
+    <div class="success-card" id="success-card" style="margin-top:1rem;">
       <div class="success-icon">✅</div>
       <h3>Your playbook is ready.</h3>
       <p>
@@ -502,36 +443,22 @@
     © 2025 Procurithm. All rights reserved.
   </footer>
 
+  <!-- MailerLite universal script -->
   <script>
-    function handleSubmit() {
-      const email = document.getElementById('email-input').value.trim();
+    (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
+    .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
+    n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
+    (window,document,'script',
+    'https://assets.mailerlite.com/js/universal.js','ml');
+    ml('account', '1622742');
 
-      // Basic validation
-      if (!email || !email.includes('@') || !email.includes('.')) {
-        document.getElementById('email-input').style.borderColor = '#ff4d6d';
-        document.getElementById('email-input').focus();
-        return;
+    // Listen for MailerLite successful submission → show download link
+    window.addEventListener('message', function(e) {
+      if (e.data && e.data.type === 'mlFormSubmitSuccess') {
+        const card = document.getElementById('success-card');
+        card.classList.add('visible');
+        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
-
-      // Reset border
-      document.getElementById('email-input').style.borderColor = '';
-
-      // TODO: Replace this URL with your MailerLite or ConvertKit form endpoint
-      // For now, we log and show the success state directly
-      // When you set up MailerLite, replace the block below with their fetch call
-      console.log('Email captured:', email);
-
-      // Show success
-      document.getElementById('form-card').style.display = 'none';
-      document.getElementById('success-card').classList.add('visible');
-
-      // Scroll to success
-      document.getElementById('success-card').scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
-
-    // Allow Enter key to submit
-    document.getElementById('email-input').addEventListener('keydown', function(e) {
-      if (e.key === 'Enter') handleSubmit();
     });
   </script>
 
