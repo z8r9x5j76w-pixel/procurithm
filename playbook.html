@@ -1,0 +1,539 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Free SaaS Contract Playbook — Procurithm</title>
+  <meta name="description" content="The 8 contract clauses that cost companies millions. Free 13-page negotiation playbook for procurement and SaaS buying teams." />
+  <meta property="og:title" content="Free: The 8 Contract Clauses That Cost Companies Millions" />
+  <meta property="og:description" content="13-page practical playbook. Good vs bad wording. Risk matrix. Negotiation framework. No fluff." />
+  <meta property="og:url" content="https://procurithm.com/playbook" />
+  <meta name="robots" content="index, follow" />
+  <style>
+    :root {
+      --bg:      #0b0f1a;
+      --card:    rgba(255,255,255,0.03);
+      --border:  rgba(255,255,255,0.07);
+      --blue:    #00d4ff;
+      --green:   #06d6a0;
+      --orange:  #ff9f1c;
+      --red:     #ff4d6d;
+      --light:   #dde6f0;
+      --mid:     #556070;
+      --navy:    #0d1b2a;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--light);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      min-height: 100vh;
+    }
+
+    /* ── Nav ── */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-brand {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--blue);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+    }
+    .nav-link {
+      color: var(--mid);
+      text-decoration: none;
+      font-size: 0.85rem;
+    }
+    .nav-link:hover { color: var(--light); }
+
+    /* ── Hero ── */
+    .hero {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 4rem 1.5rem 2rem;
+      text-align: center;
+    }
+    .badge {
+      display: inline-block;
+      background: rgba(6,214,160,0.12);
+      color: var(--green);
+      border: 1px solid rgba(6,214,160,0.3);
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      padding: 0.3rem 0.9rem;
+      margin-bottom: 1.5rem;
+      text-transform: uppercase;
+    }
+    .hero h1 {
+      font-size: clamp(1.8rem, 5vw, 2.8rem);
+      font-weight: 800;
+      line-height: 1.15;
+      color: var(--light);
+      margin-bottom: 0.5rem;
+    }
+    .hero h1 span { color: var(--blue); }
+    .hero .subtitle {
+      font-size: 1.05rem;
+      color: var(--mid);
+      margin: 1rem 0 0;
+      line-height: 1.6;
+    }
+
+    /* ── Stat bar ── */
+    .stat-bar {
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      max-width: 600px;
+      margin: 2rem auto 0;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .stat {
+      flex: 1;
+      padding: 0.9rem 0.5rem;
+      text-align: center;
+      background: var(--navy);
+      border-right: 1px solid var(--border);
+    }
+    .stat:last-child { border-right: none; }
+    .stat-num {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--blue);
+      display: block;
+    }
+    .stat-lbl {
+      font-size: 0.7rem;
+      color: var(--mid);
+      margin-top: 0.2rem;
+      display: block;
+    }
+
+    /* ── Shock stat ── */
+    .shock {
+      max-width: 600px;
+      margin: 2rem auto 0;
+      background: rgba(255,159,28,0.07);
+      border: 1px solid rgba(255,159,28,0.25);
+      border-left: 4px solid var(--orange);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      text-align: left;
+    }
+    .shock-pct {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--orange);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .shock-text {
+      font-size: 0.88rem;
+      color: var(--light);
+      line-height: 1.5;
+    }
+    .shock-text span {
+      display: block;
+      font-size: 0.75rem;
+      color: var(--mid);
+      margin-top: 0.25rem;
+    }
+
+    /* ── What's inside ── */
+    .inside {
+      max-width: 680px;
+      margin: 3rem auto 0;
+      padding: 0 1.5rem;
+    }
+    .inside h2 {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 1.25rem;
+      text-align: center;
+    }
+    .features {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+    @media (max-width: 520px) { .features { grid-template-columns: 1fr; } }
+    .feature {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.9rem 1rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+    .feature-icon {
+      font-size: 1.1rem;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+    .feature-title {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--light);
+      display: block;
+    }
+    .feature-desc {
+      font-size: 0.78rem;
+      color: var(--mid);
+      margin-top: 0.2rem;
+      line-height: 1.4;
+    }
+
+    /* ── Form ── */
+    .form-section {
+      max-width: 480px;
+      margin: 3rem auto 0;
+      padding: 0 1.5rem;
+      text-align: center;
+    }
+    .form-section h2 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--light);
+      margin-bottom: 0.5rem;
+    }
+    .form-section p {
+      font-size: 0.85rem;
+      color: var(--mid);
+      margin-bottom: 1.5rem;
+    }
+    .form-card {
+      background: var(--navy);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.75rem;
+    }
+    .form-row {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .form-input {
+      width: 100%;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      color: var(--light);
+      font-size: 0.95rem;
+      padding: 0.75rem 1rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .form-input:focus { border-color: var(--blue); }
+    .form-input::placeholder { color: var(--mid); }
+    .btn-download {
+      width: 100%;
+      background: var(--blue);
+      color: #0b0f1a;
+      border: none;
+      border-radius: 7px;
+      font-size: 1rem;
+      font-weight: 800;
+      padding: 0.85rem 1rem;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.1s;
+      letter-spacing: 0.02em;
+    }
+    .btn-download:hover { opacity: 0.88; transform: translateY(-1px); }
+    .btn-download:active { transform: translateY(0); }
+    .form-note {
+      font-size: 0.72rem;
+      color: var(--mid);
+      margin-top: 0.85rem;
+      line-height: 1.5;
+    }
+
+    /* ── Success state ── */
+    .success-card {
+      display: none;
+      background: rgba(6,214,160,0.06);
+      border: 1px solid rgba(6,214,160,0.25);
+      border-radius: 12px;
+      padding: 2rem 1.75rem;
+      text-align: center;
+    }
+    .success-card.visible { display: block; }
+    .success-icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
+    .success-card h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--green);
+      margin-bottom: 0.5rem;
+    }
+    .success-card p {
+      font-size: 0.88rem;
+      color: var(--mid);
+      margin-bottom: 1.25rem;
+      line-height: 1.5;
+    }
+    .btn-go {
+      display: inline-block;
+      background: var(--green);
+      color: #0b0f1a;
+      border-radius: 7px;
+      font-size: 0.95rem;
+      font-weight: 800;
+      padding: 0.8rem 2rem;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .btn-go:hover { opacity: 0.85; }
+
+    /* ── Preview strip ── */
+    .preview {
+      max-width: 680px;
+      margin: 3rem auto 0;
+      padding: 0 1.5rem;
+    }
+    .preview h2 {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+    .clause-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
+    }
+    .pill {
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 0.3rem 0.85rem;
+      border: 1px solid;
+    }
+    .pill.high   { color: var(--red);    border-color: rgba(255,77,109,0.35);  background: rgba(255,77,109,0.07);  }
+    .pill.medium { color: var(--orange); border-color: rgba(255,159,28,0.35); background: rgba(255,159,28,0.07); }
+    .pill.low    { color: var(--green);  border-color: rgba(6,214,160,0.35);  background: rgba(6,214,160,0.07);  }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      padding: 3rem 1.5rem 2rem;
+      font-size: 0.78rem;
+      color: var(--mid);
+      border-top: 1px solid var(--border);
+      margin-top: 4rem;
+      line-height: 1.8;
+    }
+    footer a { color: var(--blue); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <a href="/" class="nav-brand">PROCURITHM</a>
+    <a href="/#products" class="nav-link">View Paid Toolkits →</a>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="badge">Free Download</div>
+    <h1>The 8 Contract Clauses<br><span>That Cost Companies Millions</span></h1>
+    <p class="subtitle">
+      A practical 13-page negotiation playbook for procurement and SaaS buying teams.<br>
+      Good vs bad wording. Risk matrix. Negotiation framework. No fluff.
+    </p>
+
+    <!-- Stats -->
+    <div class="stat-bar">
+      <div class="stat"><span class="stat-num">8</span><span class="stat-lbl">Key Clauses</span></div>
+      <div class="stat"><span class="stat-num">13</span><span class="stat-lbl">Pages</span></div>
+      <div class="stat"><span class="stat-num">16</span><span class="stat-lbl">Good vs Bad Examples</span></div>
+      <div class="stat"><span class="stat-num">Free</span><span class="stat-lbl">No payment needed</span></div>
+    </div>
+
+    <!-- Shock stat -->
+    <div class="shock">
+      <div class="shock-pct">89%</div>
+      <div class="shock-text">
+        of SaaS contracts are signed above fair market price.
+        <span>Source: Vendr SaaS Trends Report — the clauses in this guide are your defence.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- What's inside -->
+  <section class="inside">
+    <h2>What's inside</h2>
+    <div class="features">
+      <div class="feature">
+        <div class="feature-icon">⚖️</div>
+        <div>
+          <span class="feature-title">8 Clause Deep-Dives</span>
+          <div class="feature-desc">Liability, IP, Indemnity, Audit Rights, Confidentiality and more — explained plainly.</div>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">✅</div>
+        <div>
+          <span class="feature-title">Good vs Bad Wording</span>
+          <div class="feature-desc">16 side-by-side examples of what to ask for and what to push back on.</div>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🗺️</div>
+        <div>
+          <span class="feature-title">Contract Risk Map</span>
+          <div class="feature-desc">Visual HIGH / MEDIUM / LOW risk breakdown so you know where to focus first.</div>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🎯</div>
+        <div>
+          <span class="feature-title">Negotiation Framework</span>
+          <div class="feature-desc">Fix First / Make Consistent / Tidy Up — a clear system for any contract review.</div>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">📊</div>
+        <div>
+          <span class="feature-title">Risk Assessment Matrix</span>
+          <div class="feature-desc">Prioritise which issues to resolve before signing and which can wait.</div>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">💰</div>
+        <div>
+          <span class="feature-title">Commercials Section</span>
+          <div class="feature-desc">CPI caps, payment terms, volume commitments, and change control explained.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Clause pills -->
+  <section class="preview">
+    <h2>Clauses covered</h2>
+    <div class="clause-pills">
+      <span class="pill high">Limitation of Liability</span>
+      <span class="pill high">IP Ownership</span>
+      <span class="pill high">Indemnity</span>
+      <span class="pill high">Data Protection</span>
+      <span class="pill medium">Audit Rights</span>
+      <span class="pill medium">Confidentiality</span>
+      <span class="pill medium">Subcontracting</span>
+      <span class="pill medium">Auto-Renewal & Term</span>
+      <span class="pill low">Payment Terms</span>
+      <span class="pill low">CPI Indexation</span>
+      <span class="pill low">Reporting</span>
+      <span class="pill low">Boilerplate</span>
+    </div>
+  </section>
+
+  <!-- Form -->
+  <section class="form-section">
+    <h2>Get the free playbook</h2>
+    <p>Enter your email and get instant access. No spam, no account required.</p>
+
+    <div class="form-card" id="form-card">
+      <div class="form-row">
+        <input
+          type="email"
+          id="email-input"
+          class="form-input"
+          placeholder="your@email.com"
+          autocomplete="email"
+        />
+        <button class="btn-download" onclick="handleSubmit()">
+          Download Free Playbook →
+        </button>
+      </div>
+      <p class="form-note">
+        No spam. No account. Unsubscribe any time.<br>
+        You'll also receive occasional procurement tips from Procurithm.
+      </p>
+    </div>
+
+    <div class="success-card" id="success-card">
+      <div class="success-icon">✅</div>
+      <h3>Your playbook is ready.</h3>
+      <p>
+        Click below to open the PDF. It will open in a new tab —
+        save it to your device for future reference.
+      </p>
+      <a
+        href="https://drive.google.com/file/d/1fV8NSMjogXJz2iSG1cj9NZqUmrpUIex3/view?usp=sharing"
+        target="_blank"
+        rel="noopener"
+        class="btn-go"
+      >
+        Open Playbook PDF →
+      </a>
+      <p style="margin-top:1.25rem; font-size:0.78rem;">
+        Want more? <a href="/#products" style="color:var(--blue);">View the full paid toolkits →</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <a href="/">procurithm.com</a> &nbsp;·&nbsp;
+    Practical procurement tools for buying teams &nbsp;·&nbsp;
+    Not legal advice<br>
+    © 2025 Procurithm. All rights reserved.
+  </footer>
+
+  <script>
+    function handleSubmit() {
+      const email = document.getElementById('email-input').value.trim();
+
+      // Basic validation
+      if (!email || !email.includes('@') || !email.includes('.')) {
+        document.getElementById('email-input').style.borderColor = '#ff4d6d';
+        document.getElementById('email-input').focus();
+        return;
+      }
+
+      // Reset border
+      document.getElementById('email-input').style.borderColor = '';
+
+      // TODO: Replace this URL with your MailerLite or ConvertKit form endpoint
+      // For now, we log and show the success state directly
+      // When you set up MailerLite, replace the block below with their fetch call
+      console.log('Email captured:', email);
+
+      // Show success
+      document.getElementById('form-card').style.display = 'none';
+      document.getElementById('success-card').classList.add('visible');
+
+      // Scroll to success
+      document.getElementById('success-card').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    // Allow Enter key to submit
+    document.getElementById('email-input').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') handleSubmit();
+    });
+  </script>
+
+</body>
+</html>
